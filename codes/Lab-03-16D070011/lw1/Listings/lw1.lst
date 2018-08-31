@@ -1,0 +1,85 @@
+A51 MACRO ASSEMBLER  LW1                                                                  08/13/2018 21:07:31 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw1.asm SET(SMALL) DEBUG PRINT(.\Listings\lw1.lst) OBJECT(.\Objects\lw1
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020123            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             delay_min: ;adds delay of 50ms
+                       6             using 0
+0100 C001              7             push ar1
+0102 C002              8             push ar2
+0104 7AC8              9             mov r2,#200
+0106                  10             back1:
+0106 79FF             11                     mov r1,#0ffh
+0108                  12                     back:
+0108 D9FE             13                             djnz r1,back
+010A DAFA             14                     djnz r2,back1
+010C D002             15             pop ar2
+010E D001             16             pop ar1
+0110 22               17             ret
+                      18             
+0111                  19             delay: ;delay of D/4 s
+                      20             using 0
+0111 C000             21             push ar0
+0113 C004             22             push ar4
+                      23             ;mov r0, #2h
+0115                  24             outer:
+0115 7C05             25             mov r4,#5
+0117                  26             inner:
+0117 120100           27             lcall delay_min
+011A DCFB             28             djnz r4,inner
+011C D8F7             29             djnz r0,outer
+011E D004             30             pop ar4
+0120 D000             31             pop ar0
+0122 22               32             ret     
+                      33             
+0123                  34             main:
+0123 E590             35             mov a,p1
+0125 540F             36             anl a,#0fh
+0127 F8               37             mov r0,a
+0128 E4               38             clr a
+0129 120111           39             tikde: lcall delay
+012C 2401             40             add a,#01h
+012E C4               41             swap a
+012F 5470             42             anl a,#70h
+0131 F590             43             mov p1,a
+0133 C4               44             swap a
+0134 80F3             45             sjmp tikde
+0136 80FE             46             stay: sjmp stay
+                      47             end
+A51 MACRO ASSEMBLER  LW1                                                                  08/13/2018 21:07:31 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+DELAY. . . . . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+INNER. . . . . . .  C ADDR   0117H   A   
+MAIN . . . . . . .  C ADDR   0123H   A   
+OUTER. . . . . . .  C ADDR   0115H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+STAY . . . . . . .  C ADDR   0136H   A   
+TIKDE. . . . . . .  C ADDR   0129H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

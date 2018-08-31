@@ -1,0 +1,241 @@
+A51 MACRO ASSEMBLER  FINAL                                                                08/07/2018 16:16:18 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\final.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE final.asm SET(SMALL) DEBUG PRINT(.\Listings\final.lst) OBJECT(.\Objects
+                      \final.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     led equ p1
+                       2     
+0000                   3     org 00h
+0000 0201C8            4     ljmp main
+0100                   5     org 100h
+                       6             
+0100                   7             zeroOut:
+                       8             using 0
+0100 C000              9             push ar0
+0102 C001             10             push ar1
+0104 A850             11             mov r0,50h
+0106 A951             12             mov r1,51h
+0108                  13             loop:
+0108 7700             14             mov @r1,#0
+010A 09               15             inc r1
+010B D8FB             16             djnz r0,loop
+010D D001             17             pop ar1
+010F D000             18             pop ar0
+0111 22               19             ret     
+                      20             
+0112                  21                     convert:
+0112 F5F0             22             mov b,a
+0114 C3               23             clr c
+0115 940A             24             subb a,#0ah
+0117 E5F0             25             mov a,b
+0119 4004             26             jc is_int
+011B 2437             27             add a,#55
+011D 8002             28             jmp skip
+011F                  29             is_int:
+011F 2430             30             add a,#30h
+0121 22               31             skip:ret
+                      32             
+0122                  33             bin2ascii:
+                      34             using 0
+0122 C000             35             push ar0
+0124 C001             36             push ar1
+0126 C003             37             push ar3
+                      38             ;push here
+0128 AB50             39             mov r3,50h
+012A A851             40             mov r0,51h ;read pointer
+012C A952             41             mov r1,52h ;write pointer
+012E                  42             new_number:
+012E E6               43             mov a,@r0
+012F 54F0             44             anl a,#0f0h
+0131 C4               45             swap a
+0132 120112           46             lcall convert
+0135 F7               47             mov @r1,a
+0136 09               48             inc r1
+0137 E6               49             mov a,@r0
+0138 540F             50             anl a,#0fh
+013A 120112           51             lcall convert
+013D F7               52             mov @r1,a
+013E 09               53             inc r1
+013F 08               54             inc r0
+0140 DBEC             55             djnz r3,new_number
+                      56             ;pop here
+0142 D003             57             pop ar3
+A51 MACRO ASSEMBLER  FINAL                                                                08/07/2018 16:16:18 PAGE     2
+
+0144 D001             58             pop ar1
+0146 D000             59             pop ar0
+0148 22               60             ret
+                      61             
+0149                  62     memcpy:
+                      63     using 0
+0149 C004             64     push ar4
+014B C000             65     push ar0
+014D C001             66     push ar1
+014F C003             67     push ar3
+0151 F504             68     mov 4,a
+0153 AB50             69     mov r3,50h
+0155 E551             70     mov a,51h
+0157 F8               71     mov r0,a
+0158 A952             72     mov r1,52h
+015A C3               73     clr c
+015B 99               74     subb a,r1
+015C 4008             75     jc bisgreater
+015E E6               76     loop_back_1:mov a,@r0
+015F F7               77     mov @r1,a
+0160 09               78     inc r1
+0161 08               79     inc r0
+0162 DBFA             80     djnz r3, loop_back_1
+0164 800E             81     sjmp finish
+0166                  82     bisgreater: 
+0166 E9               83     mov a,r1
+0167 2B               84     add a,r3
+0168 14               85     dec a
+0169 F9               86     mov r1,a
+016A E8               87     mov a,r0
+016B 2B               88     add a,r3
+016C 14               89     dec a
+016D F8               90     mov r0,a
+016E E6               91     loop_back_2: mov a,@r0
+016F F7               92     mov @r1,a
+0170 19               93     dec r1
+0171 18               94     dec r0
+0172 DBFA             95     djnz r3,loop_back_2
+0174 E504             96     finish:mov a,4
+0176 D003             97     pop ar3
+0178 D001             98     pop ar1
+017A D000             99     pop ar0
+017C D004            100     pop ar4
+017E 22              101     ret
+                     102     
+017F                 103             delay_min: ;adds delay of 50ms
+                     104             using 0
+017F C001            105             push ar1
+0181 C002            106             push ar2
+0183 7AC8            107             mov r2,#200
+0185                 108             back1:
+0185 79FF            109                     mov r1,#0ffh
+0187                 110                     back:
+0187 D9FE            111                             djnz r1,back
+0189 DAFA            112                     djnz r2,back1
+018B D002            113             pop ar2
+018D D001            114             pop ar1
+018F 22              115             ret
+                     116             
+0190                 117             delay:
+                     118             using 0
+0190 C000            119             push ar0
+0192 C004            120             push ar4
+0194 7802            121             mov r0,#02h     
+0196                 122             outer:
+0196 7C0A            123             mov r4,#10
+A51 MACRO ASSEMBLER  FINAL                                                                08/07/2018 16:16:18 PAGE     3
+
+0198                 124             inner:
+0198 12017F          125             lcall delay_min
+019B DCFB            126             djnz r4,inner
+019D D8F7            127             djnz r0,outer
+019F D004            128             pop ar4
+01A1 D000            129             pop ar0
+01A3 22              130             ret     
+                     131             
+01A4                 132             display:
+                     133             using 0
+01A4 C000            134             push ar0
+01A6 C001            135             push ar1
+01A8 C002            136             push ar2
+01AA F502            137             mov 2,a
+01AC A850            138             mov r0,50h
+01AE A951            139             mov r1,51h
+01B0                 140             loop1:
+01B0 E7              141             mov a,@r1
+01B1 540F            142             anl a,#0fh
+01B3 C4              143             swap a
+01B4 F590            144             mov led,a
+01B6 120190          145             lcall delay
+01B9 09              146             inc r1
+01BA D8F4            147             djnz r0,loop1
+01BC 759000          148             mov led,#0
+01BF E502            149             mov a,2
+01C1 D002            150             pop ar2
+01C3 D001            151             pop ar1
+01C5 D000            152             pop ar0
+01C7 22              153             ret
+                     154             
+01C8                 155             main:
+01C8 7581CF          156     mov sp,#0cfh
+                     157     
+01CB 755004          158     mov 50h,#4
+01CE 755170          159     mov 51h,#70h
+01D1 120100          160     lcall zeroOut
+                     161     
+01D4 755004          162     mov 50h,#4
+01D7 755175          163     mov 51h,#75h
+01DA 120100          164     lcall zeroOut
+                     165     
+01DD 755002          166     mov 50h,#2
+01E0 755160          167     mov 51h,#60h
+01E3 755270          168     mov 52h,#70h
+01E6 120122          169     lcall bin2ascii
+                     170     
+01E9 755004          171     mov 50h,#4
+01EC 755170          172     mov 51h,#70h
+01EF 755275          173     mov 52h,#75h
+01F2 120149          174     lcall memcpy
+                     175     
+01F5 755004          176     mov 50h,#4
+01F8 755175          177     mov 51h,#75h
+01FB 754F02          178     mov 4fh,#2
+01FE 1201A4          179     lcall display
+                     180     
+0201 80FE            181     here:SJMP here
+                     182     end
+A51 MACRO ASSEMBLER  FINAL                                                                08/07/2018 16:16:18 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0187H   A   
+BACK1. . . . . . .  C ADDR   0185H   A   
+BIN2ASCII. . . . .  C ADDR   0122H   A   
+BISGREATER . . . .  C ADDR   0166H   A   
+CONVERT. . . . . .  C ADDR   0112H   A   
+DELAY. . . . . . .  C ADDR   0190H   A   
+DELAY_MIN. . . . .  C ADDR   017FH   A   
+DISPLAY. . . . . .  C ADDR   01A4H   A   
+FINISH . . . . . .  C ADDR   0174H   A   
+HERE . . . . . . .  C ADDR   0201H   A   
+INNER. . . . . . .  C ADDR   0198H   A   
+IS_INT . . . . . .  C ADDR   011FH   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0108H   A   
+LOOP1. . . . . . .  C ADDR   01B0H   A   
+LOOP_BACK_1. . . .  C ADDR   015EH   A   
+LOOP_BACK_2. . . .  C ADDR   016EH   A   
+MAIN . . . . . . .  C ADDR   01C8H   A   
+MEMCPY . . . . . .  C ADDR   0149H   A   
+NEW_NUMBER . . . .  C ADDR   012EH   A   
+OUTER. . . . . . .  C ADDR   0196H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SKIP . . . . . . .  C ADDR   0121H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+ZEROOUT. . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

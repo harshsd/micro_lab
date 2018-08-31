@@ -1,0 +1,110 @@
+A51 MACRO ASSEMBLER  DISPLAY                                                              08/13/2018 19:44:05 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\display.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE display.asm SET(SMALL) DEBUG PRINT(.\Listings\display.lst) OBJECT(.\Obj
+                      ects\display.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     led equ p1
+                       2     
+0000                   3     org 00h
+0000 020149            4     ljmp main
+0100                   5     org 100h
+                       6             
+0100                   7             delay_min: ;adds delay of 50ms
+                       8             using 0
+0100 C001              9             push ar1
+0102 C002             10             push ar2
+0104 7AC8             11             mov r2,#200
+0106                  12             back1:
+0106 79FF             13                     mov r1,#0ffh
+0108                  14                     back:
+0108 D9FE             15                             djnz r1,back
+010A DAFA             16                     djnz r2,back1
+010C D002             17             pop ar2
+010E D001             18             pop ar1
+0110 22               19             ret
+                      20             
+0111                  21             delay:
+                      22             using 0
+0111 C000             23             push ar0
+0113 C004             24             push ar4
+0115 7802             25             mov r0,#02h     
+0117                  26             outer:
+0117 7C0A             27             mov r4,#10
+0119                  28             inner:
+0119 120100           29             lcall delay_min
+011C DCFB             30             djnz r4,inner
+011E D8F7             31             djnz r0,outer
+0120 D004             32             pop ar4
+0122 D000             33             pop ar0
+0124 22               34             ret     
+                      35             
+0125                  36             display:
+                      37             using 0
+0125 C000             38             push ar0
+0127 C001             39             push ar1
+0129 C002             40             push ar2
+012B F502             41             mov 2,a
+012D A850             42             mov r0,50h
+012F 7951             43             mov r1,#51h
+0131                  44             loop:
+0131 E7               45             mov a,@r1
+0132 540F             46             anl a,#0fh
+0134 03               47             rr a
+0135 03               48             rr a
+0136 03               49             rr a
+0137 03               50             rr a
+0138 F590             51             mov led,a
+013A 120111           52             lcall delay
+013D 09               53             inc r1
+013E D8F1             54             djnz r0,loop
+0140 E502             55             mov a,2
+0142 D002             56             pop ar2
+0144 D001             57             pop ar1
+A51 MACRO ASSEMBLER  DISPLAY                                                              08/13/2018 19:44:05 PAGE     2
+
+0146 D000             58             pop ar0
+0148 22               59             ret
+                      60             
+0149                  61             main:
+0149 755003           62             mov 50h , #3h
+014C 755105           63             mov 51h , #05h
+014F 75520A           64             mov 52h , #0ah
+0152 75530F           65             mov 53h , #0fh
+0155 120125           66             lcall display
+0158 80FE             67             stay:sjmp stay
+                      68             end
+A51 MACRO ASSEMBLER  DISPLAY                                                              08/13/2018 19:44:05 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+DELAY. . . . . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+DISPLAY. . . . . .  C ADDR   0125H   A   
+INNER. . . . . . .  C ADDR   0119H   A   
+LED. . . . . . . .  D ADDR   0090H   A   
+LOOP . . . . . . .  C ADDR   0131H   A   
+MAIN . . . . . . .  C ADDR   0149H   A   
+OUTER. . . . . . .  C ADDR   0117H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+STAY . . . . . . .  C ADDR   0158H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

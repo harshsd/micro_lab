@@ -1,0 +1,53 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    08/01/2018  18:57:57  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\hw2.obj TO .\Objects\hw2 PRINT (.\Listings\hw2.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\hw2.obj (HW2)
+
+
+LINK MAP OF MODULE:  .\Objects\hw2 (HW2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0111H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\hw2 (HW2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        HW2
+  C:0100H         SYMBOL        MAIN
+  C:010FH         SYMBOL        STAY
+  C:0109H         SYMBOL        UP
+  C:0000H         LINE#         2
+  C:0100H         LINE#         7
+  C:0103H         LINE#         9
+  C:0105H         LINE#         10
+  C:0107H         LINE#         11
+  C:0109H         LINE#         13
+  C:010AH         LINE#         14
+  C:010BH         LINE#         15
+  C:010CH         LINE#         16
+  C:010DH         LINE#         17
+  C:010FH         LINE#         19
+  -------         ENDMOD        HW2
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0014H BYTE ( 0%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=273
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

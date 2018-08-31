@@ -1,0 +1,52 @@
+A51 MACRO ASSEMBLER  ZEROOUT                                                              08/05/2018 15:07:50 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\zeroOut.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE zeroOut.asm SET(SMALL) DEBUG PRINT(.\Listings\zeroOut.lst) OBJECT(.\Obj
+                      ects\zeroOut.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020112            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             zeroOut:
+                       6             using 0
+0100 C000              7             push ar0
+0102 C001              8             push ar1
+0104 A850              9             mov r0,50h
+0106 A951             10             mov r1,51h
+0108                  11             loop:
+0108 7700             12             mov @r1,#0
+010A 09               13             inc r1
+010B D8FB             14             djnz r0,loop
+010D D001             15             pop ar1
+010F D000             16             pop ar0
+0111 22               17             ret
+                      18             
+0112                  19             main:
+0112 120100           20             lcall zeroOut
+0115 80FE             21             stay: sjmp stay
+                      22             end
+A51 MACRO ASSEMBLER  ZEROOUT                                                              08/05/2018 15:07:50 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+LOOP . . . . . . .  C ADDR   0108H   A   
+MAIN . . . . . . .  C ADDR   0112H   A   
+STAY . . . . . . .  C ADDR   0115H   A   
+ZEROOUT. . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

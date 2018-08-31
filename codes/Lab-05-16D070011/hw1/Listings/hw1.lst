@@ -1,0 +1,69 @@
+A51 MACRO ASSEMBLER  HW1                                                                  08/28/2018 14:20:34 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\hw1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE hw1.asm SET(SMALL) DEBUG PRINT(.\Listings\hw1.lst) OBJECT(.\Objects\hw1
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 02010B            2     ljmp main
+000B                   3     org 0bh
+000B C28C              4             clr tr0
+000D C28D              5             clr tf0
+000F 868C              6             mov th0 , @r0
+0011 878A              7             mov tl0 , @r1
+0013 B297              8             cpl p1.7
+0015 D28C              9             setb tr0
+0017 32               10             reti
+0100                  11     org 100h
+0100                  12             update:
+0100 E7               13             mov a,@r1
+0101 F4               14             cpl a
+0102 2401             15             add a,#1
+0104 F7               16             mov @r1,a
+0105 E6               17             mov a,@r0
+0106 F4               18             cpl a
+0107 3400             19             addc a,#0
+0109 F6               20             mov @r0,a
+010A 22               21             ret
+010B                  22             main:
+010B 759000           23             mov p1,#0
+010E 7881             24             mov r0,#81h
+0110 7982             25             mov r1,#82h
+0112 76A0             26             mov @r0,#0A0h
+0114 7700             27             mov @r1,#00h
+0116 3100             28             acall update
+0118 758901           29             mov tmod, #01h
+011B 75A882           30             mov ie , #82h
+011E 758CFF           31             mov th0 , #0ffh
+0121 758AFF           32             mov tl0 , #0ffh
+0124 D28C             33             setb tr0
+0126 80FE             34             stay: sjmp stay
+                      35             end
+A51 MACRO ASSEMBLER  HW1                                                                  08/28/2018 14:20:34 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+IE . . . . . . . .  D ADDR   00A8H   A   
+MAIN . . . . . . .  C ADDR   010BH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+STAY . . . . . . .  C ADDR   0126H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+UPDATE . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

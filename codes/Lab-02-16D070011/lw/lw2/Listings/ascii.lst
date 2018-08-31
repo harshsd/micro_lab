@@ -1,0 +1,90 @@
+A51 MACRO ASSEMBLER  ASCII                                                                08/10/2018 23:57:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\ascii.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE ascii.avm SET(SMALL) DEBUG PRINT(.\Listings\ascii.lst) OBJECT(.\Objects
+                      \ascii.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020137            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             convert:
+0100 F5F0              6             mov b,a
+0102 C3                7             clr c
+0103 940A              8             subb a,#0ah
+0105 E5F0              9             mov a,b
+0107 4004             10             jc is_int
+0109 2437             11             add a,#55
+010B 8002             12             jmp skip
+010D                  13             is_int:
+010D 2430             14             add a,#30h
+010F 22               15             skip:ret
+                      16             
+0110                  17             bin2ascii:
+                      18             using 0
+0110 C000             19             push ar0
+0112 C001             20             push ar1
+0114 C003             21             push ar3
+                      22             ;push here
+0116 AB50             23             mov r3,50h
+0118 A851             24             mov r0,51h ;read pointer
+011A A952             25             mov r1,52h ;write pointer
+011C                  26             new_number:
+011C E6               27             mov a,@r0
+011D 54F0             28             anl a,#0f0h
+011F C4               29             swap a
+0120 120100           30             lcall convert
+0123 F7               31             mov @r1,a
+0124 09               32             inc r1
+0125 E6               33             mov a,@r0
+0126 540F             34             anl a,#0fh
+0128 120100           35             lcall convert
+012B F7               36             mov @r1,a
+012C 09               37             inc r1
+012D 08               38             inc r0
+012E DBEC             39             djnz r3,new_number
+                      40             ;pop here
+0130 D003             41             pop ar3
+0132 D001             42             pop ar1
+0134 D000             43             pop ar0
+0136 22               44             ret
+                      45             
+0137                  46             main:
+0137 755003           47             mov 50h,#3
+013A 755160           48             mov 51h,#60h
+013D 755270           49             mov 52h,#70h
+0140 756012           50             mov 60h,#12h
+0143 75619A           51             mov 61h,#9ah
+0146 7562EF           52             mov 62h,#0efh
+0149 120110           53             lcall bin2ascii
+014C 80FE             54             here:sjmp here
+                      55             end
+A51 MACRO ASSEMBLER  ASCII                                                                08/10/2018 23:57:07 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BIN2ASCII. . . . .  C ADDR   0110H   A   
+CONVERT. . . . . .  C ADDR   0100H   A   
+HERE . . . . . . .  C ADDR   014CH   A   
+IS_INT . . . . . .  C ADDR   010DH   A   
+MAIN . . . . . . .  C ADDR   0137H   A   
+NEW_NUMBER . . . .  C ADDR   011CH   A   
+SKIP . . . . . . .  C ADDR   010FH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

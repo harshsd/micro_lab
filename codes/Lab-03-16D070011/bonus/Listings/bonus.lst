@@ -1,0 +1,67 @@
+A51 MACRO ASSEMBLER  BONUS                                                                08/14/2018 15:49:42 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\bonus.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE bonus.asm SET(SMALL) DEBUG PRINT(.\Listings\bonus.lst) OBJECT(.\Objects
+                      \bonus.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 02011A            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             sqrt: ;sqrt in a. else higher nibble in a.input in r0
+                       6             ;mov 5,#0
+0100 E8                7             mov a,r0
+0101 B40001            8             cjne a,#0,non_zero
+                       9             ;mov 5,#1
+0104 22               10             ret
+0105                  11             non_zero:
+0105 7910             12             mov r1,#16
+0107 E8               13             loop: mov a,r0
+0108 89F0             14             mov b,r1
+010A 84               15             div ab
+010B 99               16             subb a,r1
+010C 7008             17             jnz not_square
+010E E5F0             18             mov a,b 
+0110 B40003           19             cjne a,#0,not_square
+0113 E9               20             mov a,r1
+0114 C4               21             swap a  
+0115 22               22             ret
+0116                  23             not_square:
+0116 D9EF             24             djnz r1,loop
+0118 E8               25             mov a,r0
+                      26             ;swap a
+0119 22               27             ret
+                      28             
+011A                  29             main:
+011A 7550FF           30             mov 50h,#0ffh
+011D A850             31             mov r0,50H
+011F 120100           32             lcall sqrt
+0122 F590             33             mov p1,a
+0124 80FE             34             stay: sjmp stay
+                      35             end
+A51 MACRO ASSEMBLER  BONUS                                                                08/14/2018 15:49:42 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+LOOP . . . . . . .  C ADDR   0107H   A   
+MAIN . . . . . . .  C ADDR   011AH   A   
+NON_ZERO . . . . .  C ADDR   0105H   A   
+NOT_SQUARE . . . .  C ADDR   0116H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SQRT . . . . . . .  C ADDR   0100H   A   
+STAY . . . . . . .  C ADDR   0124H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

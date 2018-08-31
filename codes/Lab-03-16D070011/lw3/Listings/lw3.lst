@@ -1,0 +1,133 @@
+A51 MACRO ASSEMBLER  LW3                                                                  08/14/2018 15:29:50 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw3.asm SET(SMALL) DEBUG PRINT(.\Listings\lw3.lst) OBJECT(.\Objects\lw3
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020167            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             delay_min: ;adds delay of 50ms
+                       6             using 0
+0100 C001              7             push ar1
+0102 C002              8             push ar2
+0104 7AC8              9             mov r2,#200
+0106                  10             back1:
+0106 79FF             11                     mov r1,#0ffh
+0108                  12                     back:
+0108 D9FE             13                             djnz r1,back
+010A DAFA             14                     djnz r2,back1
+010C D002             15             pop ar2
+010E D001             16             pop ar1
+0110 22               17             ret
+                      18     
+0111                  19             delay: ;adds delay equal to D/2 seconds where D is stored in r0
+                      20             using 0
+0111 C000             21             push ar0
+0113 C004             22             push ar4        
+0115                  23             outer:
+0115 7C0A             24             mov r4,#10
+0117                  25             inner:
+0117 120100           26             lcall delay_min
+011A DCFB             27             djnz r4,inner
+011C D8F7             28             djnz r0,outer
+011E D004             29             pop ar4
+0120 D000             30             pop ar0
+0122 22               31             ret     
+                      32             
+0123                  33             setleds:
+0123 D297             34             setb p1.7
+0125 D296             35             setb p1.6
+0127 D295             36             setb p1.5
+0129 D294             37             setb p1.4
+012B 22               38             ret
+                      39             
+012C                  40             clrleds:
+012C C297             41             clr p1.7
+012E C296             42             clr p1.6
+0130 C295             43             clr p1.5
+0132 C294             44             clr p1.4
+0134 22               45             ret
+                      46             
+0135                  47             readNibble: ;moves nibble to @r1
+                      48             using 0
+0135 C000             49             push ar0        
+0137 120123           50             lcall setleds
+013A 780A             51             mov r0,#10
+013C 120111           52             lcall delay
+013F 12012C           53             lcall clrleds
+0142 7802             54             mov r0,#2
+0144 120111           55             lcall delay
+0147 E590             56             mov a,p1
+0149 540F             57             anl a,#0fh
+A51 MACRO ASSEMBLER  LW3                                                                  08/14/2018 15:29:50 PAGE     2
+
+014B F5F0             58             mov b,a
+014D C4               59             swap a
+014E 240F             60             add a,#0fh
+0150 F590             61             mov p1,a
+0152 780A             62             mov r0,#10
+0154 120111           63             lcall delay
+                      64             ;mov r0,#2
+                      65             ;mov a,p1
+                      66             ;anl a,#0fh
+                      67             ;cjne a,#0fh,readNibble
+0157 3090DB           68             jnb p1.0,readNibble
+                      69             ;setb p1.7
+015A A7F0             70             mov @r1,b
+015C D000             71             pop ar0
+015E 22               72             ret
+                      73             
+015F                  74             packNibbles:
+015F E54E             75             mov a,4eh
+0161 C4               76             swap a
+0162 254F             77             add a,4fh
+0164 F550             78             mov 50h,a
+0166 22               79             ret
+                      80             
+0167                  81             main:
+0167 794E             82             mov r1,#4eh
+0169 120135           83             lcall readNibble
+016C 09               84             inc r1
+016D 120135           85             lcall readNibble
+0170 12015F           86             lcall packNibbles
+0173 12012C           87             lcall clrleds
+0176 80FE             88             stay: sjmp stay
+                      89             end
+A51 MACRO ASSEMBLER  LW3                                                                  08/14/2018 15:29:50 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+CLRLEDS. . . . . .  C ADDR   012CH   A   
+DELAY. . . . . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+INNER. . . . . . .  C ADDR   0117H   A   
+MAIN . . . . . . .  C ADDR   0167H   A   
+OUTER. . . . . . .  C ADDR   0115H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PACKNIBBLES. . . .  C ADDR   015FH   A   
+READNIBBLE . . . .  C ADDR   0135H   A   
+SETLEDS. . . . . .  C ADDR   0123H   A   
+STAY . . . . . . .  C ADDR   0176H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,83 @@
+A51 MACRO ASSEMBLER  LW3                                                                  08/11/2018 00:02:08 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw3.asm SET(SMALL) DEBUG PRINT(.\Listings\lw3.lst) OBJECT(.\Objects\lw3
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020136            2     ljmp main
+0100                   3     org 100h
+                       4     ;r0,r1,r3 and a used. Also push psw if it is needed
+0100                   5     memcpy:
+                       6     using 0
+0100 C004              7     push ar4
+0102 C000              8     push ar0
+0104 C001              9     push ar1
+0106 C003             10     push ar3
+0108 F504             11     mov 4,a
+010A AB50             12     mov r3,50h
+010C E551             13     mov a,51h
+010E F8               14     mov r0,a
+010F A952             15     mov r1,52h
+0111 C3               16     clr c
+0112 99               17     subb a,r1
+0113 4008             18     jc bisgreater
+0115 E6               19     loop_back_1:mov a,@r0
+0116 F7               20     mov @r1,a
+0117 09               21     inc r1
+0118 08               22     inc r0
+0119 DBFA             23     djnz r3, loop_back_1
+011B 801C             24     sjmp finish
+011D                  25     bisgreater: 
+011D E9               26     mov a,r1
+011E 2B               27     add a,r3
+011F 14               28     dec a
+0120 F9               29     mov r1,a
+0121 E8               30     mov a,r0
+0122 2B               31     add a,r3
+0123 14               32     dec a
+0124 F8               33     mov r0,a
+0125 E6               34     loop_back_2: mov a,@r0
+0126 F7               35     mov @r1,a
+0127 19               36     dec r1
+0128 18               37     dec r0
+0129 DBFA             38     djnz r3,loop_back_2
+012B E504             39     mov a,4
+012D D003             40     pop ar3
+012F D001             41     pop ar1
+0131 D000             42     pop ar0
+0133 D004             43     pop ar4
+0135 22               44     ret
+                      45     
+0136                  46     main:
+0136 120100           47     lcall memcpy
+0139 80FE             48     finish: sjmp finish
+                      49     end 
+A51 MACRO ASSEMBLER  LW3                                                                  08/11/2018 00:02:08 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+BISGREATER . . . .  C ADDR   011DH   A   
+FINISH . . . . . .  C ADDR   0139H   A   
+LOOP_BACK_1. . . .  C ADDR   0115H   A   
+LOOP_BACK_2. . . .  C ADDR   0125H   A   
+MAIN . . . . . . .  C ADDR   0136H   A   
+MEMCPY . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

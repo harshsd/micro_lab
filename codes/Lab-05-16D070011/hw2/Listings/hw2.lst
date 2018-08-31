@@ -1,0 +1,82 @@
+A51 MACRO ASSEMBLER  HW2                                                                  08/28/2018 01:53:44 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\hw2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE hw2.asm SET(SMALL) DEBUG PRINT(.\Listings\hw2.lst) OBJECT(.\Objects\hw2
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020129            2     ljmp main
+0100                   3     org 100h
+0100                   4             delay_timer0:
+                       5             using 0
+0100 C0E0              6             push 0e0h
+0102 C3                7             clr c
+0103 E7                8             mov a,@r1
+0104 F4                9             cpl a
+0105 2401             10             add a,#1
+0107 F58A             11             mov tl0,a
+0109 E6               12             mov a,@r0
+010A F4               13             cpl a
+010B 3400             14             addc a,#0h
+010D F58C             15             mov th0,a
+010F D28C             16             setb tr0
+0111 308DFD           17             check: jnb tf0, check
+0114 C28C             18             clr tr0
+0116 C28D             19             clr tf0
+0118 D0E0             20             pop 0e0h
+011A 22               21             ret
+                      22             
+011B                  23             second_delay:
+011B 7C1F             24             mov r4,#31
+011D 3100             25             back: acall delay_timer0
+011F DCFC             26             djnz r4,back
+0121 22               27             ret
+                      28             
+0122                  29             led_blink:
+0122 0D               30             inc r5
+0123 B297             31             cpl p1.7
+0125 311B             32             acall second_delay
+0127 80F9             33             sjmp led_blink
+                      34             
+0129                  35             main:
+0129 7D00             36             mov r5,#0
+012B 7881             37             mov r0,#81h
+012D 7982             38             mov r1,#82h
+012F 76FB             39             mov @r0,#0fbh
+0131 77FF             40             mov @r1,#0ffh
+0133 758901           41             mov tmod, #01h
+0136 759000           42             mov p1,#0
+0139 80E7             43             sjmp led_blink
+013B 80FE             44             stay: sjmp stay
+                      45             end
+A51 MACRO ASSEMBLER  HW2                                                                  08/28/2018 01:53:44 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   011DH   A   
+CHECK. . . . . . .  C ADDR   0111H   A   
+DELAY_TIMER0 . . .  C ADDR   0100H   A   
+LED_BLINK. . . . .  C ADDR   0122H   A   
+MAIN . . . . . . .  C ADDR   0129H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SECOND_DELAY . . .  C ADDR   011BH   A   
+STAY . . . . . . .  C ADDR   013BH   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

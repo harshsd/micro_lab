@@ -1,0 +1,80 @@
+A51 MACRO ASSEMBLER  LW_2_2                                                               08/01/2018 19:16:52 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw_2_2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw_2_2.asm SET(SMALL) DEBUG PRINT(.\Listings\lw_2_2.lst) OBJECT(.\Objec
+                      ts\lw_2_2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     Org 00h
+0000 020106            2     ljmp main
+0100                   3     org 100H
+                       4     
+                       5     
+0100                   6     EXCHANGE:
+0100 A6F0              7     MOV @R0,B
+0102 ED                8     MOV A,R5
+0103 F7                9     MOV @R1,A
+0104 802F             10     JMP RETURN
+                      11     
+0106                  12     main:
+                      13     ;0E, FF, 58, 4A, DF;
+                      14     ;FA, 06, 05, 03, 00
+0106 75600E           15     MOV 60H,#00eH
+0109 7561FF           16     MOV 61H,#0ffH
+010C 756258           17     MOV 62H,#058H
+010F 75634A           18     MOV 63H,#04aH
+0112 7564DF           19     MOV 64H,#0dfH
+                      20     
+0115 7860             21     MOV R0,#60H
+0117 7970             22     MOV R1,#70H
+0119 7A05             23     MOV R2,#05H
+011B                  24     UP: 
+011B E6               25     MOV A,@R0
+011C F7               26     MOV @R1,A
+011D 09               27     INC R1
+011E 08               28     INC R0
+011F DAFA             29     DJNZ R2, UP
+                      30     
+0121 7B04             31     MOV R3,#04H
+0123 7870             32     OUTER:MOV R0,#70H
+0125 7971             33     MOV R1,#71H
+0127 7A04             34     MOV R2,#04H
+0129 E6               35     AGAIN:MOV A,@R0
+012A 87F0             36     MOV B,@R1
+012C FD               37     MOV R5,A
+012D C3               38     CLR C
+012E 95F0             39     SUBB A,B
+0130 4002             40     JC SKIP
+0132 80CC             41     JMP EXCHANGE
+0134 08               42     SKIP:INC R0
+0135 09               43     RETURN:INC R1
+0136 DAF1             44     DJNZ R2, AGAIN
+0138 DBE9             45     DJNZ R3, OUTER
+013A 80FE             46     LOOP: SJMP LOOP
+                      47     END
+A51 MACRO ASSEMBLER  LW_2_2                                                               08/01/2018 19:16:52 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0129H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+EXCHANGE . . . . .  C ADDR   0100H   A   
+LOOP . . . . . . .  C ADDR   013AH   A   
+MAIN . . . . . . .  C ADDR   0106H   A   
+OUTER. . . . . . .  C ADDR   0123H   A   
+RETURN . . . . . .  C ADDR   0135H   A   
+SKIP . . . . . . .  C ADDR   0134H   A   
+UP . . . . . . . .  C ADDR   011BH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

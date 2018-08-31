@@ -1,0 +1,122 @@
+A51 MACRO ASSEMBLER  LW2                                                                  08/13/2018 20:46:46 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw2.asm SET(SMALL) DEBUG PRINT(.\Listings\lw2.lst) OBJECT(.\Objects\lw2
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020131            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             bin2grey: ;Binary in R3 and Grey in R5
+                       6             using 0
+0100 C3                7             clr c
+0101 EB                8             mov a,r3
+0102 13                9             rrc a
+0103 6B               10             xrl a,r3
+0104 FD               11             mov r5,a
+0105 22               12             ret
+                      13             
+0106                  14             grey2bin: ;Grey in R3 and binary in R5
+                      15             using 0
+0106 C003             16             push ar3
+0108 C3               17             clr c
+0109 7C07             18             mov r4,#07h
+010B 8BF0             19             mov b,r3
+010D                  20             loop:
+010D E5F0             21                     mov a,b
+010F 13               22                     rrc a
+0110 C3               23                     clr c
+0111 F5F0             24                     mov b,a
+0113 6B               25                     xrl a,r3
+0114 FB               26                     mov r3,a
+0115 DCF6             27                     djnz r4,loop
+0117 850305           28             mov 5,3
+011A D003             29             pop ar3 
+011C 22               30             ret     
+                      31             
+011D                  32             input:
+011D E4               33             clr a
+011E C3               34             clr c
+011F 7407             35             mov a,#07h
+0121 209202           36             jb p1.2 , b2
+0124 9404             37             subb a,#04h
+0126 209102           38             b2: jb p1.1 , b1
+0129 9402             39             subb a,#02h
+012B 209002           40             b1: jb p1.0 , b0
+012E 9401             41             subb a , #01h
+0130 22               42             b0: ret
+                      43             
+                      44     ;       setbits:
+                      45     ;       mov r6,a
+                      46     ;       anl a,#04h
+                      47     ;       jz b6
+                      48     ;       setb p1.6
+                      49     ;       b6: mov a,r6
+                      50     ;       anl a,#02h
+                      51     ;       jz b5
+                      52     ;;      setb p1.5
+                      53             ;b5: mov a,r6
+                      54             ;anl a,#1h
+                      55             ;jz b4
+                      56             ;setb p1.4
+                      57             ;b4: ret
+A51 MACRO ASSEMBLER  LW2                                                                  08/13/2018 20:46:46 PAGE     2
+
+                      58             
+0131                  59             main:
+                      60             ;setb p1.3
+                      61             ;setb p1.2
+                      62             ;setb p1.1
+                      63             ;clr p1.0
+0131 E590             64             mov a , p1
+                      65             ;sjmp input
+0133 5407             66             anl a,#07h
+0135 FB               67             mov r3,a
+0136 309305           68             jnb p1.3 , here
+                      69             ;setb p1.4
+                      70             ;sjmp main
+                      71             ;here: clr p1.4
+0139 120106           72             lcall grey2bin
+013C 8003             73             sjmp skip
+013E 120100           74             here: lcall bin2grey
+0141 ED               75             skip: mov a,r5
+0142 540F             76             anl a,#0fh
+0144 C4               77             swap a
+                      78             ;lcall setbits
+0145 F590             79             mov p1,a
+                      80             ;sjmp main
+0147 80FE             81             stay: sjmp stay 
+                      82             end
+A51 MACRO ASSEMBLER  LW2                                                                  08/13/2018 20:46:46 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR3. . . . . . . .  D ADDR   0003H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+B0 . . . . . . . .  C ADDR   0130H   A   
+B1 . . . . . . . .  C ADDR   012BH   A   
+B2 . . . . . . . .  C ADDR   0126H   A   
+BIN2GREY . . . . .  C ADDR   0100H   A   
+GREY2BIN . . . . .  C ADDR   0106H   A   
+HERE . . . . . . .  C ADDR   013EH   A   
+INPUT. . . . . . .  C ADDR   011DH   A   
+LOOP . . . . . . .  C ADDR   010DH   A   
+MAIN . . . . . . .  C ADDR   0131H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SKIP . . . . . . .  C ADDR   0141H   A   
+STAY . . . . . . .  C ADDR   0147H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

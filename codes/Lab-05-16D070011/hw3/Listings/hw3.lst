@@ -1,0 +1,285 @@
+A51 MACRO ASSEMBLER  HW3                                                                  08/28/2018 15:44:18 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\hw3.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE hw3.asm SET(SMALL) DEBUG PRINT(.\Listings\hw3.lst) OBJECT(.\Objects\hw3
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0083                 1     out equ p0.3
+                       2     
+0000                   3     org 00h
+0000 02012E            4     ljmp main
+000B                   5     org 0bh
+000B C28C              6             clr tr0
+000D C28D              7             clr tf0
+000F 868C              8             mov th0 , @r0
+0011 878A              9             mov tl0 , @r1
+0013 B283             10             cpl out
+0015 D28C             11             setb tr0
+0017 32               12             reti
+0100                  13     org 100h
+0100                  14             delay_min: ;adds delay of 5ms
+                      15             using 0
+0100 C001             16             push ar1
+0102 C002             17             push ar2
+0104 7A14             18             mov r2,#20
+0106                  19             back1:
+0106 79FF             20                     mov r1,#0ffh
+0108                  21                     back:
+0108 D9FE             22                             djnz r1,back
+010A DAFA             23                     djnz r2,back1
+010C D002             24             pop ar2
+010E D001             25             pop ar1
+0110 22               26             ret
+                      27             
+0111                  28             delay: ;330ms * value in R3
+                      29             using 0
+0111 C003             30             push ar3
+0113 C004             31             push ar4
+                      32             ;mov r0, #2h
+0115                  33             outer:
+0115 7C42             34             mov r4,#66
+0117                  35             inner:
+0117 120100           36             lcall delay_min
+011A DCFB             37             djnz r4,inner
+011C DBF7             38             djnz r3,outer
+011E D004             39             pop ar4
+0120 D003             40             pop ar3
+0122 22               41             ret
+                      42             
+0123                  43             update:
+0123 E7               44             mov a,@r1
+0124 F4               45             cpl a
+0125 2401             46             add a,#1
+0127 F7               47             mov @r1,a
+0128 E6               48             mov a,@r0
+0129 F4               49             cpl a
+012A 3400             50             addc a,#0
+012C F6               51             mov @r0,a
+012D 22               52             ret
+012E                  53             main:;0.00206l
+012E 758000           54             mov p0,#0
+0131 7881             55             mov r0,#81h
+0133 7982             56             mov r1,#82h
+0135 758901           57             mov tmod, #01h
+A51 MACRO ASSEMBLER  HW3                                                                  08/28/2018 15:44:18 PAGE     2
+
+0138 75A882           58             mov ie , #82h
+013B 7B0A             59             mov r3,#10
+013D 759000           60             mov p1,#0
+0140 7B03             61             mov r3,#3
+0142 3111             62             acall delay
+0144 7B02             63             mov r3,#2
+0146 31A5             64             acall koga
+0148 3196             65             acall re
+014A 7B01             66             mov r3,#1
+014C 3178             67             acall sa
+014E 7B02             68             mov r3,#2
+0150 3196             69             acall re
+0152 7B01             70             mov r3,#1
+0154 511D             71             acall ni
+0156 7B03             72             mov r3,#3
+0158 3178             73             acall sa
+015A 7B01             74             mov r3,#1
+015C 3111             75             acall delay
+015E 31E1             76             acall pa
+0160 31FF             77             acall dha
+0162 7B02             78             mov r3,#2
+0164 3178             79             acall sa
+0166 7B01             80             mov r3,#1
+0168 3196             81             acall re
+016A 7B02             82             mov r3,#2
+016C 31B4             83             acall ga
+016E 7B01             84             mov r3,#1
+0170 31C3             85             acall ma
+0172 7B02             86             mov r3,#2
+0174 3196             87             acall re
+0176 80FE             88             stay: sjmp stay
+                      89             
+0178                  90             sa:
+0178 7610             91             mov @r0,#10h
+017A 7710             92             mov @r1,#10h
+017C 3123             93             acall update
+017E D28C             94             setb tr0
+0180 3111             95             acall delay
+0182 C28C             96             clr tr0
+0184 C283             97             clr out
+0186 22               98             ret
+                      99             
+0187                 100             kore:
+0187 760F            101             mov @r0,#0fh
+0189 770F            102             mov @r1,#0fh
+018B 3123            103             acall update
+018D D28C            104             setb tr0
+018F 3111            105             acall delay
+0191 C28C            106             clr tr0
+0193 C283            107             clr out
+0195 22              108             ret
+                     109             
+0196                 110             re:
+0196 760E            111             mov @r0,#0eh
+0198 7745            112             mov @r1,#45h
+019A 3123            113             acall update
+019C D28C            114             setb tr0
+019E 3111            115             acall delay
+01A0 C28C            116             clr tr0
+01A2 C283            117             clr out
+01A4 22              118             ret
+                     119             
+01A5                 120             koga:
+01A5 760D            121             mov @r0,#0dh
+01A7 775E            122             mov @r1,#5eh
+01A9 3123            123             acall update
+A51 MACRO ASSEMBLER  HW3                                                                  08/28/2018 15:44:18 PAGE     3
+
+01AB D28C            124             setb tr0
+01AD 3111            125             acall delay
+01AF C28C            126             clr tr0
+01B1 C283            127             clr out
+01B3 22              128             ret
+                     129             
+01B4                 130             ga:
+01B4 760C            131             mov @r0,#0ch
+01B6 77D3            132             mov @r1,#0d3h
+01B8 3123            133             acall update
+01BA D28C            134             setb tr0
+01BC 3111            135             acall delay
+01BE C28C            136             clr tr0
+01C0 C283            137             clr out
+01C2 22              138             ret
+                     139             
+01C3                 140             ma:
+01C3 760C            141             mov @r0,#0ch
+01C5 7703            142             mov @r1,#03h
+01C7 3123            143             acall update
+01C9 D28C            144             setb tr0
+01CB 3111            145             acall delay
+01CD C28C            146             clr tr0
+01CF C283            147             clr out
+01D1 22              148             ret
+                     149             
+01D2                 150             tivma:
+01D2 760B            151             mov @r0,#0bh
+01D4 7740            152             mov @r1,#40h
+01D6 3123            153             acall update
+01D8 D28C            154             setb tr0
+01DA 3111            155             acall delay
+01DC C28C            156             clr tr0
+01DE C283            157             clr out
+01E0 22              158             ret
+                     159             
+01E1                 160             pa:
+01E1 760A            161             mov @r0,#0ah
+01E3 77A8            162             mov @r1,#0a8h
+01E5 3123            163             acall update
+01E7 D28C            164             setb tr0
+01E9 3111            165             acall delay
+01EB C28C            166             clr tr0
+01ED C283            167             clr out
+01EF 22              168             ret
+                     169             
+01F0                 170             kodha:
+01F0 7609            171             mov @r0,#09h
+01F2 77FA            172             mov @r1,#0fah
+01F4 3123            173             acall update
+01F6 D28C            174             setb tr0
+01F8 3111            175             acall delay
+01FA C28C            176             clr tr0
+01FC C283            177             clr out
+01FE 22              178             ret
+                     179             
+01FF                 180             dha:
+01FF 7609            181             mov @r0,#09h
+0201 7790            182             mov @r1,#90h
+0203 3123            183             acall update
+0205 D28C            184             setb tr0
+0207 3111            185             acall delay
+0209 C28C            186             clr tr0
+020B C283            187             clr out
+020D 22              188             ret
+                     189             
+A51 MACRO ASSEMBLER  HW3                                                                  08/28/2018 15:44:18 PAGE     4
+
+020E                 190             koni:
+020E 7608            191             mov @r0,#08h
+0210 77F5            192             mov @r1,#0f5h
+0212 3123            193             acall update
+0214 D28C            194             setb tr0
+0216 3111            195             acall delay
+0218 C28C            196             clr tr0
+021A C283            197             clr out
+021C 22              198             ret
+                     199             
+021D                 200             ni:
+021D 7608            201             mov @r0,#08h
+021F 777D            202             mov @r1,#7dh
+0221 3123            203             acall update
+0223 D28C            204             setb tr0
+0225 3111            205             acall delay
+0227 C28C            206             clr tr0
+0229 C283            207             clr out
+022B 22              208             ret
+                     209             
+022C                 210             varcha_sa:
+022C 7607            211             mov @r0,#07h
+022E 77F1            212             mov @r1,#0f1h
+0230 3123            213             acall update
+0232 D28C            214             setb tr0
+0234 3111            215             acall delay
+0236 C28C            216             clr tr0
+0238 C283            217             clr out
+023A 22              218             ret
+                     219             
+                     220             end     
+A51 MACRO ASSEMBLER  HW3                                                                  08/28/2018 15:44:18 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR3. . . . . . . .  D ADDR   0003H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+DELAY. . . . . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+DHA. . . . . . . .  C ADDR   01FFH   A   
+GA . . . . . . . .  C ADDR   01B4H   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+INNER. . . . . . .  C ADDR   0117H   A   
+KODHA. . . . . . .  C ADDR   01F0H   A   
+KOGA . . . . . . .  C ADDR   01A5H   A   
+KONI . . . . . . .  C ADDR   020EH   A   
+KORE . . . . . . .  C ADDR   0187H   A   
+MA . . . . . . . .  C ADDR   01C3H   A   
+MAIN . . . . . . .  C ADDR   012EH   A   
+NI . . . . . . . .  C ADDR   021DH   A   
+OUT. . . . . . . .  B ADDR   0080H.3 A   
+OUTER. . . . . . .  C ADDR   0115H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PA . . . . . . . .  C ADDR   01E1H   A   
+RE . . . . . . . .  C ADDR   0196H   A   
+SA . . . . . . . .  C ADDR   0178H   A   
+STAY . . . . . . .  C ADDR   0176H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TIVMA. . . . . . .  C ADDR   01D2H   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+UPDATE . . . . . .  C ADDR   0123H   A   
+VARCHA_SA. . . . .  C ADDR   022CH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

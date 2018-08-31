@@ -1,0 +1,83 @@
+A51 MACRO ASSEMBLER  DELAY                                                                08/06/2018 23:05:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\delay.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE delay.asm SET(SMALL) DEBUG PRINT(.\Listings\delay.lst) OBJECT(.\Objects
+                      \delay.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0080                 1     led equ p0
+0000                   2     org 00h
+0000 020123            3     ljmp main
+0100                   4     org 100h
+                       5     
+0100                   6             delay_min: ;adds delay of 50ms
+                       7             using 0
+0100 C001              8             push ar1
+0102 C002              9             push ar2
+0104 7AC8             10             mov r2,#200
+0106                  11             back1:
+0106 79FF             12                     mov r1,#0ffh
+0108                  13                     back:
+0108 D9FE             14                             djnz r1,back
+010A DAFA             15                     djnz r2,back1
+010C D002             16             pop ar2
+010E D001             17             pop ar1
+0110 22               18             ret
+                      19                     
+0111                  20             delay:
+                      21             using 0
+0111 C000             22             push ar0
+0113 C004             23             push ar4        
+0115                  24             outer:
+0115 7C0A             25             mov r4,#10
+0117                  26             inner:
+0117 120100           27             lcall delay_min
+011A DCFB             28             djnz r4,inner
+011C D8F7             29             djnz r0,outer
+011E D004             30             pop ar4
+0120 D000             31             pop ar0
+0122 22               32             ret
+                      33             
+0123                  34             main:
+0123 758000           35             mov led,#00h
+0126 A84F             36             mov r0,4fh
+0128                  37             endless:
+0128 7480             38             mov a,#80h
+012A F580             39             mov p0,a
+012C 120111           40             lcall delay
+012F 7400             41             mov a,#0
+0131 F580             42             mov p0,a
+0133 120111           43             lcall delay
+0136 80F0             44             sjmp endless
+                      45             end     
+A51 MACRO ASSEMBLER  DELAY                                                                08/06/2018 23:05:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR0. . . . . . . .  D ADDR   0000H   A   
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+AR4. . . . . . . .  D ADDR   0004H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+DELAY. . . . . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+ENDLESS. . . . . .  C ADDR   0128H   A   
+INNER. . . . . . .  C ADDR   0117H   A   
+LED. . . . . . . .  D ADDR   0080H   A   
+MAIN . . . . . . .  C ADDR   0123H   A   
+OUTER. . . . . . .  C ADDR   0115H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

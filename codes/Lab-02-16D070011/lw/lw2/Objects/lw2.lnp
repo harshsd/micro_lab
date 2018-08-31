@@ -1,0 +1,3 @@
+".\Objects\ascii.obj" 
+TO ".\Objects\lw2" 
+PRINT(".\Listings\lw2.m51") RAMSIZE(256) 

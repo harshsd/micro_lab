@@ -1,0 +1,85 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    08/01/2018  19:16:52  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\lw_2_2.obj TO .\Objects\sort PRINT (.\Listings\sort.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\lw_2_2.obj (LW_2_2)
+
+
+LINK MAP OF MODULE:  .\Objects\sort (LW_2_2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     013CH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\sort (LW_2_2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        LW_2_2
+  C:0129H         SYMBOL        AGAIN
+  D:00F0H         SYMBOL        B
+  C:0100H         SYMBOL        EXCHANGE
+  C:013AH         SYMBOL        LOOP
+  C:0106H         SYMBOL        MAIN
+  C:0123H         SYMBOL        OUTER
+  C:0135H         SYMBOL        RETURN
+  C:0134H         SYMBOL        SKIP
+  C:011BH         SYMBOL        UP
+  C:0000H         LINE#         2
+  C:0100H         LINE#         7
+  C:0102H         LINE#         8
+  C:0103H         LINE#         9
+  C:0104H         LINE#         10
+  C:0106H         LINE#         15
+  C:0109H         LINE#         16
+  C:010CH         LINE#         17
+  C:010FH         LINE#         18
+  C:0112H         LINE#         19
+  C:0115H         LINE#         21
+  C:0117H         LINE#         22
+  C:0119H         LINE#         23
+  C:011BH         LINE#         25
+  C:011CH         LINE#         26
+  C:011DH         LINE#         27
+  C:011EH         LINE#         28
+  C:011FH         LINE#         29
+  C:0121H         LINE#         31
+  C:0123H         LINE#         32
+  C:0125H         LINE#         33
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/01/2018  19:16:52  PAGE 2
+
+
+  C:0127H         LINE#         34
+  C:0129H         LINE#         35
+  C:012AH         LINE#         36
+  C:012CH         LINE#         37
+  C:012DH         LINE#         38
+  C:012EH         LINE#         39
+  C:0130H         LINE#         40
+  C:0132H         LINE#         41
+  C:0134H         LINE#         42
+  C:0135H         LINE#         43
+  C:0136H         LINE#         44
+  C:0138H         LINE#         45
+  C:013AH         LINE#         46
+  -------         ENDMOD        LW_2_2
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 003FH BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=316
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

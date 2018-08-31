@@ -1,0 +1,61 @@
+A51 MACRO ASSEMBLER  LW_1_2                                                               08/01/2018 19:10:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\lw_1_2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE lw_1_2.asm SET(SMALL) DEBUG PRINT(.\Listings\lw_1_2.lst) OBJECT(.\Objec
+                      ts\lw_1_2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 0h
+0000 020100            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5     main:
+                       6     
+0100 7560FF            7     mov 60h,#0FFh
+0103 7561FF            8     mov 61h,#0FFh
+0106 7570FC            9     mov 70h,#0FCh
+0109 7571DE           10     mov 71h,#0DEh
+                      11     
+010C E560             12     mov a,60h
+010E 5480             13     anl a,#10000000b
+0110 23               14     rl a
+0111 F504             15     mov 4,a
+0113 E570             16     mov a,70h
+0115 5480             17     anl a, #80h
+0117 23               18     rl a
+0118 F505             19     mov 5,a
+                      20     
+011A E4               21     clr a
+011B E561             22     mov a,61H
+011D 9571             23     subb a,71H
+011F F564             24     mov 64H,a
+                      25     
+0121 E560             26     mov a,60H
+0123 9570             27     subb a,70H
+0125 F563             28     mov 63H,a
+                      29     
+0127 E505             30     mov a,5
+0129 9504             31     subb a,4
+012B 5401             32     anl a,#1
+012D F562             33     mov 62h,a
+012F 80FE             34     loop: sjmp loop
+                      35     end 
+A51 MACRO ASSEMBLER  LW_1_2                                                               08/01/2018 19:10:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LOOP . . . . . . .  C ADDR   012FH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
