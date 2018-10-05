@@ -1,0 +1,103 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    09/01/2018  11:00:20  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\led_display.obj TO .\Objects\led_display PRINT (.\Listings\led_display.m51) RAMSIZ
+>> E (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\led_display.obj (LED_DISPLAY)
+
+
+LINK MAP OF MODULE:  .\Objects\led_display (LED_DISPLAY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     014FH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\led_display (LED_DISPLAY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        LED_DISPLAY
+  D:00F0H         SYMBOL        B
+  C:0108H         SYMBOL        BACK
+  C:0106H         SYMBOL        BACK1
+  C:012AH         SYMBOL        CHANGE_FREQ
+  C:0111H         SYMBOL        DELAY_250MS
+  C:0100H         SYMBOL        DELAY_MIN
+  C:013FH         SYMBOL        DIVIDE
+  C:0140H         SYMBOL        EXIT
+  C:0141H         SYMBOL        MAIN
+  D:0090H         SYMBOL        P1
+  C:0115H         SYMBOL        RELOOP
+  C:0117H         SYMBOL        REPEAT
+  C:014DH         SYMBOL        STAY
+  C:0122H         SYMBOL        TOGGLE
+  C:0000H         LINE#         2
+  C:0100H         LINE#         7
+  C:0102H         LINE#         8
+  C:0104H         LINE#         9
+  C:0106H         LINE#         11
+  C:0108H         LINE#         13
+  C:010AH         LINE#         14
+  C:010CH         LINE#         15
+  C:010EH         LINE#         16
+  C:0110H         LINE#         17
+  C:0111H         LINE#         20
+  C:0113H         LINE#         21
+  C:0115H         LINE#         22
+  C:0117H         LINE#         23
+  C:0119H         LINE#         24
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  09/01/2018  11:00:20  PAGE 2
+
+
+  C:011BH         LINE#         25
+  C:011DH         LINE#         26
+  C:011FH         LINE#         27
+  C:0121H         LINE#         28
+  C:0122H         LINE#         31
+  C:0124H         LINE#         32
+  C:0126H         LINE#         33
+  C:0128H         LINE#         34
+  C:012AH         LINE#         37
+  C:012DH         LINE#         38
+  C:012EH         LINE#         40
+  C:0130H         LINE#         41
+  C:0132H         LINE#         42
+  C:0133H         LINE#         43
+  C:0134H         LINE#         44
+  C:0135H         LINE#         45
+  C:0137H         LINE#         46
+  C:0138H         LINE#         47
+  C:0139H         LINE#         48
+  C:013AH         LINE#         49
+  C:013BH         LINE#         50
+  C:013DH         LINE#         51
+  C:013FH         LINE#         52
+  C:0140H         LINE#         53
+  C:0141H         LINE#         56
+  C:0143H         LINE#         57
+  C:0146H         LINE#         58
+  C:0148H         LINE#         59
+  C:014AH         LINE#         60
+  C:014BH         LINE#         61
+  C:014DH         LINE#         62
+  -------         ENDMOD        LED_DISPLAY
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0052H BYTE ( 4%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=335
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

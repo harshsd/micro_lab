@@ -1,0 +1,3 @@
+".\Objects\blinky.obj" 
+TO ".\Objects\embed_C" 
+PRINT(".\Listings\embed_C.m51") RAMSIZE(256) 

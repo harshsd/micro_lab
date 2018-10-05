@@ -1,0 +1,80 @@
+A51 MACRO ASSEMBLER  SORT_TWO                                                             09/01/2018 10:29:07 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\sort_two.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE sort_two.asm SET(SMALL) DEBUG PRINT(.\Listings\sort_two.lst) OBJECT(.\O
+                      bjects\sort_two.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020129            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             exchange:;check and sort numbers in @r0 and @r1
+0100 E6                6             mov a,@r0
+0101 67                7             xrl a,@r1
+0102 5480              8             anl a,#80h
+0104 B48008            9             cjne a,#80h,same_sign
+0107 E6               10             mov a,@r0
+0108 5480             11             anl a,#80h
+010A B48007           12             cjne a,#80h,change
+010D 8008             13             sjmp exit
+010F                  14             same_sign:
+010F E6               15             mov a,@r0
+0110 C3               16             clr c
+0111 97               17             subb a,@r1
+0112 4003             18             jc exit
+0114 E6               19             change: mov a,@r0
+0115 C7               20             xch a,@r1
+0116 F6               21             mov @r0,a
+0117 22               22             exit:ret
+                      23             
+0118                  24             sort:
+0118 7B05             25             mov r3,#05h
+011A 7850             26             outer:mov r0,#50h
+011C 7951             27             mov r1,#51h
+011E 7A05             28             mov r2,#05h
+0120 3100             29             again:acall exchange
+0122 08               30             inc r0
+0123 09               31             inc r1
+0124 DAFA             32             djnz r2,again
+0126 DBF2             33             djnz r3,outer
+0128 22               34             ret
+                      35             
+                      36             
+0129                  37             main:
+0129 C3               38     clr c   
+012A 755040           39     mov 50h,#040h
+012D 755120           40     mov 51h,#020h
+0130 755280           41     mov 52h, #080h
+0133 7553AC           42     mov 53h, #0ach
+0136 7554BD           43     mov 54h, #0bdh
+0139 7555DE           44     mov 55h, #0deh
+013C 3118             45     acall sort
+013E 80FE             46     stay:sjmp stay
+                      47     end
+A51 MACRO ASSEMBLER  SORT_TWO                                                             09/01/2018 10:29:07 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0120H   A   
+CHANGE . . . . . .  C ADDR   0114H   A   
+EXCHANGE . . . . .  C ADDR   0100H   A   
+EXIT . . . . . . .  C ADDR   0117H   A   
+MAIN . . . . . . .  C ADDR   0129H   A   
+OUTER. . . . . . .  C ADDR   011AH   A   
+SAME_SIGN. . . . .  C ADDR   010FH   A   
+SORT . . . . . . .  C ADDR   0118H   A   
+STAY . . . . . . .  C ADDR   013EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

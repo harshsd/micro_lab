@@ -1,0 +1,105 @@
+A51 MACRO ASSEMBLER  LED_DISPLAY                                                          09/01/2018 11:00:19 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\led_display.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE led_display.asm SET(SMALL) DEBUG PRINT(.\Listings\led_display.lst) OBJE
+                      CT(.\Objects\led_display.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020141            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             delay_min: ;adds delay of 50ms
+                       6             using 0
+0100 C001              7             push ar1
+0102 C002              8             push ar2
+0104 7AC8              9             mov r2,#200
+0106                  10             back1:
+0106 79FF             11                     mov r1,#0ffh
+0108                  12                     back:
+0108 D9FE             13                             djnz r1,back
+010A DAFA             14                     djnz r2,back1
+010C D002             15             pop ar2
+010E D001             16             pop ar1
+0110 22               17             ret
+                      18             
+0111                  19             delay_250ms:
+0111 C001             20             push 1
+0113 C002             21             push 2
+0115 7905             22             reloop:mov r1,#5
+0117 3100             23             repeat:acall delay_min
+0119 D9FC             24             djnz r1,repeat
+011B DAF8             25             djnz r2,reloop
+011D D002             26             pop 2
+011F D001             27             pop 1
+0121 22               28             ret
+                      29             
+0122                  30             toggle:
+0122 312A             31             acall change_freq
+0124 3111             32             acall delay_250ms
+0126 B297             33             cpl p1.7
+0128 3122             34             acall toggle
+                      35             
+012A                  36             change_freq:
+012A 75F002           37             mov b,#2
+012D E9               38             mov a,r1
+                      39             ;setb p1.3
+012E E590             40             mov a,p1
+0130 5408             41             anl a,#08h
+0132 FB               42             mov r3,a        
+0133 C3               43             clr c
+0134 99               44             subb a,r1
+0135 6009             45             jz exit
+0137 EB               46             mov a,r3
+0138 F9               47             mov r1,a
+0139 EA               48             mov a,r2
+013A 84               49             div ab
+013B 7002             50             jnz divide
+013D 7410             51             mov a,#16
+013F FA               52             divide: mov r2,a
+0140 22               53             exit:ret
+                      54             
+0141                  55             main:
+0141 7A10             56             mov r2,#16
+0143 75900F           57             mov p1,#0Fh
+A51 MACRO ASSEMBLER  LED_DISPLAY                                                          09/01/2018 11:00:19 PAGE     2
+
+0146 E590             58             mov a,p1
+0148 5408             59             anl a,#08h
+014A F9               60             mov r1,a
+014B 80D5             61             sjmp toggle
+014D 80FE             62             stay: sjmp stay 
+                      63             end
+A51 MACRO ASSEMBLER  LED_DISPLAY                                                          09/01/2018 11:00:19 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AR1. . . . . . . .  D ADDR   0001H   A   
+AR2. . . . . . . .  D ADDR   0002H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0108H   A   
+BACK1. . . . . . .  C ADDR   0106H   A   
+CHANGE_FREQ. . . .  C ADDR   012AH   A   
+DELAY_250MS. . . .  C ADDR   0111H   A   
+DELAY_MIN. . . . .  C ADDR   0100H   A   
+DIVIDE . . . . . .  C ADDR   013FH   A   
+EXIT . . . . . . .  C ADDR   0140H   A   
+MAIN . . . . . . .  C ADDR   0141H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+RELOOP . . . . . .  C ADDR   0115H   A   
+REPEAT . . . . . .  C ADDR   0117H   A   
+STAY . . . . . . .  C ADDR   014DH   A   
+TOGGLE . . . . . .  C ADDR   0122H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

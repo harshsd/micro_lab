@@ -1,0 +1,3 @@
+".\Objects\mult.obj" 
+TO ".\Objects\mult" 
+PRINT(".\Listings\mult.m51") RAMSIZE(256) 

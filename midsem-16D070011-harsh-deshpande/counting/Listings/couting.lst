@@ -1,0 +1,92 @@
+A51 MACRO ASSEMBLER  COUTING                                                              09/01/2018 10:00:00 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\couting.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE couting.asm SET(SMALL) DEBUG PRINT(.\Listings\couting.lst) OBJECT(.\Obj
+                      ects\couting.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020141            2     ljmp main
+                       3     
+0100                   4     org 100h
+                       5     
+0100                   6     num_of_ones: ;number in R3 and result in R4
+0100 C005              7     push 5
+0102 C003              8     push 3
+0104 7D08              9     mov r5,#8
+0106 7C00             10     mov r4,#0
+0108 EB               11     next_bit:mov a,r3
+0109 13               12     rrc a
+010A FB               13     mov r3,a
+010B EC               14     mov a,r4
+010C 3400             15     addc a,#0
+010E FC               16     mov r4,a
+010F DDF7             17     djnz r5,next_bit
+0111 D003             18     pop 3
+0113 D005             19     pop 5
+0115 22               20     ret
+                      21     
+0116                  22     find_z_and_o:
+0116 C000             23     push 0
+0118 C001             24     push 1
+011A C002             25     push 2
+011C C006             26     push 6
+011E 7A00             27     mov r2,#0
+0120 7850             28     mov r0,#50h
+0122 7960             29     mov r1,#60h
+0124 7E05             30     mov r6,#5
+0126 E6               31     next_num:mov a,@r0
+0127 FB               32     mov r3,a
+0128 3100             33     acall num_of_ones
+012A EA               34     mov a,r2
+012B 2C               35     add a,r4
+012C FA               36     mov r2,a
+012D 08               37     inc r0
+012E DEF6             38     djnz r6,next_num
+                      39     ;mov a,r2
+0130 A702             40     mov @r1,2h
+0132 7428             41     mov a,#40
+0134 C3               42     clr c
+0135 9A               43     subb a,r2
+0136 09               44     inc r1
+0137 F7               45     mov @r1,a
+0138 D006             46     pop 6
+013A D002             47     pop 2
+013C D001             48     pop 1
+013E D000             49     pop 0
+0140 22               50     ret
+                      51     
+0141                  52     main:
+0141 7550A5           53     mov 50h,#0A5h
+0144 755100           54     mov 51h,#00h
+0147 755297           55     mov 52h,#97h
+014A 755338           56     mov 53h,#38h
+014D 755429           57     mov 54h,#29h
+A51 MACRO ASSEMBLER  COUTING                                                              09/01/2018 10:00:00 PAGE     2
+
+0150 3116             58     acall find_z_and_o
+0152 80FE             59     stay:sjmp stay
+                      60     end
+A51 MACRO ASSEMBLER  COUTING                                                              09/01/2018 10:00:00 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+FIND_Z_AND_O . . .  C ADDR   0116H   A   
+MAIN . . . . . . .  C ADDR   0141H   A   
+NEXT_BIT . . . . .  C ADDR   0108H   A   
+NEXT_NUM . . . . .  C ADDR   0126H   A   
+NUM_OF_ONES. . . .  C ADDR   0100H   A   
+STAY . . . . . . .  C ADDR   0152H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

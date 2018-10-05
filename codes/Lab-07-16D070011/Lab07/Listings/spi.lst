@@ -1,0 +1,317 @@
+C51 COMPILER V9.59.0.0   SPI                                                               09/25/2018 15:59:51 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SPI
+OBJECT MODULE PLACED IN .\Objects\spi.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE spi.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\spi.l
+                    -st) TABS(2) OBJECT(.\Objects\spi.obj)
+
+line level    source
+
+   1          /**
+   2           SPI HOMEWORK2 , LABWORK2 (SAME PROGRAM)
+   3           */
+   4          
+   5          /* @section  I N C L U D E S */
+   6          #include "at89c5131.h"
+   7          #include "stdio.h"
+   8          #define LCD_data  P2                // LCD Data port
+   9          #define sample 1
+  10          void Timer_Init();
+  11          void SPI_Init();
+  12          void LCD_Init();
+  13          void LCD_DataWrite(char dat);
+  14          void LCD_CmdWrite(char cmd);
+  15          void LCD_StringWrite(char * str, unsigned char len);
+  16          void LCD_Ready();
+  17          void sdelay(int delay);
+  18          void delay_ms(int delay);
+  19          char int_to_string(int val);
+  20          void sample_data(int no_of_samples);
+  21          void binary_to_ascii(int binary);
+  22          sbit CS_BAR = P1^4;                 // Chip Select for the ADC
+  23          sbit LCD_rs = P0^0;                 // LCD Register Select
+  24          sbit LCD_rw = P0^1;                 // LCD Read/Write
+  25          sbit LCD_en = P0^2;                 // LCD Enable
+  26          sbit LCD_busy = P2^7;               // LCD Busy Flag
+  27          sbit ONULL = P1^0;
+  28          bit transmit_completed= 0;              // To check if spi data transmit is complete
+  29          bit offset_null = 0;                // Check if offset nulling is enabled
+  30          bit roundoff = 0;
+  31          
+  32          unsigned long adcVal=0, voltage= 0 , sum = 0,tempadcVal=0 ,temp_low,temp_high,try0=0;
+  33          unsigned int avgVal=0, initVal=0, adcValue = 0 , temp=0 ;
+  34          
+  35          unsigned char serial_data,cursor_pos,display_num;
+  36          unsigned char data_save_high;
+  37          unsigned char data_save_low;
+  38          unsigned char count=0, i=0;
+  39          float fweight=0;
+  40          
+  41          /**
+  42          
+  43           * FUNCTION_INPUTS:  P1.5(MISO) serial input  
+  44           * FUNCTION_OUTPUTS: P1.7(MOSI) serial output
+  45           *                   P1.4(SSbar)
+  46                               P1.6(SCK)
+  47           */
+  48           
+  49          void main(void)
+  50          {
+  51   1        CS_BAR = 1;
+  52   1        P1 = P1 | 0x20;
+  53   1        Timer_Init();
+  54   1        SPI_Init();
+C51 COMPILER V9.59.0.0   SPI                                                               09/25/2018 15:59:51 PAGE 2   
+
+  55   1        LCD_Init();
+  56   1        while(1)
+  57   1        {
+  58   2          CS_BAR = 0;                               // falling edge of CS bar
+  59   2          SPDAT= 0x00;                      // first 4 bits will be address of the channel
+  60   2          while(!transmit_completed);               // wait for the transmit complete flag  
+  61   2          data_save_high = serial_data;               // save the 
+  62   2          transmit_completed = 0;                   // make the flag 0
+  63   2          SPDAT =0x00;  
+  64   2          while(!transmit_completed); 
+  65   2          data_save_low = serial_data;
+  66   2          transmit_completed = 0; 
+  67   2          CS_BAR = 1;
+  68   2          data_save_low = (data_save_low>>6); 
+  69   2          tempadcVal = data_save_high;
+  70   2          tempadcVal = (tempadcVal<<2); 
+  71   2          tempadcVal += data_save_low;  
+  72   2          //tempadcVal = (data_save_high<<2) + data_save_low;   // save the 10 bits in one variable
+  73   2        }
+  74   1      }
+  75          /**
+  76           * FUNCTION_PURPOSE:interrupt
+  77           * FUNCTION_INPUTS: void
+  78           * FUNCTION_OUTPUTS: transmit_complete is software transfert flag
+  79           */
+  80          void it_SPI(void) interrupt 9 /* interrupt address is 0x004B, (Address -3)/8 = interrupt no.*/
+  81          {
+  82   1        switch  ( SPSTA )         /* read and clear spi status register */
+  83   1        {
+  84   2          case 0x80:  
+  85   2            serial_data=SPDAT;   /* read receive data */
+  86   2            transmit_completed=1;/* set software flag */
+  87   2          break;
+  88   2      
+  89   2          case 0x10:
+  90   2            
+  91   2          break;
+  92   2        
+  93   2          case 0x40:
+  94   2          break;
+  95   2        }
+  96   1      }
+  97          
+  98          void timer0_ISR (void) interrupt 1
+  99          {
+ 100   1        TR0 = 0;
+ 101   1        TH0 = 0x00;//Initialize TH0
+ 102   1        TL0 = 0xe0;//Initialize TL0
+ 103   1        
+ 104   1        //Increment Overflow
+ 105   1         count += 1;
+ 106   1         sum = sum + tempadcVal;
+ 107   1      
+ 108   1         if(count == 10)
+ 109   1         {
+ 110   2          avgVal = sum/10;
+ 111   2          adcVal = (avgVal*3.9*5 - 175)*1.045;
+ 112   2          cursor_pos = 0x83;
+ 113   2          for (i=0;i<=3;i++)
+ 114   2          {
+ 115   3            LCD_CmdWrite(cursor_pos);
+ 116   3            delay_ms(5);
+C51 COMPILER V9.59.0.0   SPI                                                               09/25/2018 15:59:51 PAGE 3   
+
+ 117   3            LCD_DataWrite((adcVal%10)+48);
+ 118   3            delay_ms(5);
+ 119   3            adcVal = adcVal/10;
+ 120   3            cursor_pos = cursor_pos - 1;
+ 121   3          }
+ 122   2      
+ 123   2          count = 0;
+ 124   2          sum = 0;
+ 125   2         }
+ 126   1      
+ 127   1         TR0 = 1;
+ 128   1        //Write averaging of 10 samples code here
+ 129   1      
+ 130   1      }
+ 131          
+ 132          /**
+ 133          
+ 134           * FUNCTION_INPUTS:  P1.5(MISO) serial input  
+ 135           * FUNCTION_OUTPUTS: P1.7(MOSI) serial output
+ 136           *                   P1.4(SSbar)
+ 137                               P1.6(SCK)
+ 138           */ 
+ 139          void SPI_Init()
+ 140          {
+ 141   1        CS_BAR = 1;                     // DISABLE ADC SLAVE SELECT-CS 
+ 142   1        SPCON |= 0x20;                  // P1.1(SSBAR) is available as standard I/O pin 
+ 143   1        SPCON |= 0x01;                  // Fclk Periph/4 AND Fclk Periph=12MHz ,HENCE SCK IE. BAUD RATE=3000KHz 
+ 144   1        SPCON |= 0x10;                  // Master mode 
+ 145   1        SPCON &= ~0x08;                 // CPOL=0; transmit mode example|| SCK is 0 at idle state
+ 146   1        SPCON |= 0x04;                  // CPHA=1; transmit mode example 
+ 147   1        IEN1 |= 0x04;                   // enable spi interrupt 
+ 148   1        EA=1;                           // enable interrupts 
+ 149   1        SPCON |= 0x40;                  // run spi;ENABLE SPI INTERFACE SPEN= 1 
+ 150   1      //  IPH0 |=0x10;
+ 151   1      //  IPL0 |=0x10;
+ 152   1      }
+ 153          
+ 154          void Timer_Init()
+ 155          {
+ 156   1        // Set Timer0 to work in up counting 16 bit mode. Counts upto 
+ 157   1        // 65536 depending upon the calues of TH0 and TL0
+ 158   1        // The timer counts 65536 processor cycles. A processor cycle is 
+ 159   1        // 12 clocks. FOr 24 MHz, it takes 65536/2 uS to overflow
+ 160   1      
+ 161   1          TH0 = 0xb1;
+ 162   1        TL0 = 0xe0;
+ 163   1        //Initialize TH0
+ 164   1        //Initialize TL0
+ 165   1      
+ 166   1        TMOD = 0x01;
+ 167   1        ET0 = 1;
+ 168   1        TR0 = 1;
+ 169   1        //Configure TMOD 
+ 170   1        //Set ET0
+ 171   1        //Set TR0
+ 172   1      }
+ 173          /**
+ 174           * FUNCTION_PURPOSE:LCD Initialization
+ 175           * FUNCTION_INPUTS: void
+ 176           * FUNCTION_OUTPUTS: none
+ 177           */
+ 178          void LCD_Init()
+C51 COMPILER V9.59.0.0   SPI                                                               09/25/2018 15:59:51 PAGE 4   
+
+ 179          {
+ 180   1        sdelay(100);
+ 181   1        LCD_CmdWrite(0x38);     // LCD 2lines, 5*7 matrix
+ 182   1        LCD_CmdWrite(0x0C);     // Display ON cursor ON  Blinking off
+ 183   1        LCD_CmdWrite(0x01);     // Clear the LCD
+ 184   1        LCD_CmdWrite(0x80);     // Cursor to First line First Position
+ 185   1      }
+ 186          
+ 187          /**
+ 188           * FUNCTION_PURPOSE: Write Command to LCD
+ 189           * FUNCTION_INPUTS: cmd- command to be written
+ 190           * FUNCTION_OUTPUTS: none
+ 191           */
+ 192          void LCD_CmdWrite(char cmd)
+ 193          {
+ 194   1        LCD_Ready();
+ 195   1        LCD_data=cmd;           // Send the command to LCD
+ 196   1        LCD_rs=0;               // Select the Command Register by pulling LCD_rs LOW
+ 197   1        LCD_rw=0;               // Select the Write Operation  by pulling RW LOW
+ 198   1        LCD_en=1;               // Send a High-to-Low Pusle at Enable Pin
+ 199   1        sdelay(5);
+ 200   1        LCD_en=0;
+ 201   1        sdelay(5);
+ 202   1      }
+ 203          
+ 204          /**
+ 205           * FUNCTION_PURPOSE: Write Command to LCD
+ 206           * FUNCTION_INPUTS: dat- data to be written
+ 207           * FUNCTION_OUTPUTS: none
+ 208           */
+ 209          void LCD_DataWrite( char dat)
+ 210          {
+ 211   1        LCD_Ready();
+ 212   1        LCD_data=dat;           // Send the data to LCD
+ 213   1        LCD_rs=1;               // Select the Data Register by pulling LCD_rs HIGH
+ 214   1        LCD_rw=0;               // Select the Write Operation by pulling RW LOW
+ 215   1        LCD_en=1;               // Send a High-to-Low Pusle at Enable Pin
+ 216   1        sdelay(5);
+ 217   1        LCD_en=0;
+ 218   1        sdelay(5);
+ 219   1      }
+ 220          /**
+ 221           * FUNCTION_PURPOSE: Write a string on the LCD Screen
+ 222           * FUNCTION_INPUTS: 1. str - pointer to the string to be written, 
+ 223                              2. length - length of the array
+ 224           * FUNCTION_OUTPUTS: none
+ 225           */
+ 226          void LCD_StringWrite( char * str, unsigned char length)
+ 227          {
+ 228   1          while(length>0)
+ 229   1          {
+ 230   2              LCD_DataWrite(*str);
+ 231   2              str++;
+ 232   2              length--;
+ 233   2          }
+ 234   1      }
+ 235          
+ 236          /**
+ 237           * FUNCTION_PURPOSE: To check if the LCD is ready to communicate
+ 238           * FUNCTION_INPUTS: void
+ 239           * FUNCTION_OUTPUTS: none
+ 240           */
+C51 COMPILER V9.59.0.0   SPI                                                               09/25/2018 15:59:51 PAGE 5   
+
+ 241          void LCD_Ready()
+ 242          {
+ 243   1        LCD_data = 0xFF;
+ 244   1        LCD_rs = 0;
+ 245   1        LCD_rw = 1;
+ 246   1        LCD_en = 0;
+ 247   1        sdelay(5);
+ 248   1        LCD_en = 1;
+ 249   1      //  while(LCD_busy == 1)
+ 250   1      //  {
+ 251   1      //    LCD_en = 0;
+ 252   1      //    LCD_en = 1;
+ 253   1      //  }
+ 254   1        LCD_en = 0;
+ 255   1      }
+ 256          
+ 257          /**
+ 258           * FUNCTION_PURPOSE: A delay of 15us for a 24 MHz crystal
+ 259           * FUNCTION_INPUTS: void
+ 260           * FUNCTION_OUTPUTS: none
+ 261           */
+ 262          void sdelay(int delay)
+ 263          {
+ 264   1        char d=0;
+ 265   1        while(delay>0)
+ 266   1        {
+ 267   2          for(d=0;d<5;d++);
+ 268   2          delay--;
+ 269   2        }
+ 270   1      }
+ 271          
+ 272          /**
+ 273           * FUNCTION_PURPOSE: A delay of around 1000us for a 24MHz crystel
+ 274           * FUNCTION_INPUTS: void
+ 275           * FUNCTION_OUTPUTS: none
+ 276           */
+ 277          void delay_ms(int delay)
+ 278          {
+ 279   1        int d=0;
+ 280   1        while(delay>0)
+ 281   1        {
+ 282   2          for(d=0;d<382;d++);
+ 283   2          delay--;
+ 284   2        }
+ 285   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    670    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     47       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

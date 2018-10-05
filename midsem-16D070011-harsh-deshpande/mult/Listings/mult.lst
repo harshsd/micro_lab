@@ -1,0 +1,88 @@
+A51 MACRO ASSEMBLER  MULT                                                                 09/01/2018 11:32:17 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\mult.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE mult.asm SET(SMALL) DEBUG PRINT(.\Listings\mult.lst) OBJECT(.\Objects\m
+                      ult.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     org 00h
+0000 020132            2     ljmp main
+0100                   3     org 100h
+                       4             
+0100                   5             lower_nibble:
+0100 E551              6             mov a,51h
+0102 8561F0            7             mov b,61h
+0105 A4                8             mul ab
+0106 F573              9             mov 73h,a
+0108 85F072           10             mov 72h,b
+010B C3               11             clr c
+010C 22               12             ret
+                      13             
+010D                  14             middle_nibble:
+010D E6               15             mov a,@r0
+010E 87F0             16             mov b,@r1
+0110 A4               17             mul ab
+0111 2572             18             add a,72h
+0113 F572             19             mov 72h,a
+0115 E571             20             mov a,71h
+0117 35F0             21             addc a,b
+0119 F571             22             mov 71h,a
+011B 5002             23             jnc exit
+011D 0570             24             inc 70h
+011F C3               25             exit:clr c
+0120 22               26             ret
+                      27             
+0121                  28             upper_nibble:
+0121 E560             29             mov a,60h
+0123 8550F0           30             mov b,50h
+0126 A4               31             mul ab
+0127 2571             32             add a,71h
+0129 F571             33             mov 71h,a
+012B E570             34             mov a,70h
+012D 35F0             35             addc a,b
+012F F570             36             mov 70h,a
+0131 22               37             ret
+                      38             
+0132                  39             main:
+0132 7550FF           40             mov 50h,#0ffh
+0135 7551FF           41             mov 51h,#0ffh
+0138 7560FF           42             mov 60h,#0ffh
+013B 7561FF           43             mov 61h,#0ffh
+013E 757000           44             mov 70h,#0
+0141 757100           45             mov 71h,#0
+0144 757200           46             mov 72h,#0
+0147 757300           47             mov 73h,#0
+014A 3100             48             acall lower_nibble
+014C 7850             49             mov r0,#50h
+014E 7961             50             mov r1,#61h
+0150 310D             51             acall middle_nibble
+0152 7851             52             mov r0,#51h
+0154 7960             53             mov r1,#60h
+0156 310D             54             acall middle_nibble
+0158 3121             55             acall upper_nibble
+015A 80FE             56             stay: sjmp stay
+                      57             end     
+A51 MACRO ASSEMBLER  MULT                                                                 09/01/2018 11:32:17 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+EXIT . . . . . . .  C ADDR   011FH   A   
+LOWER_NIBBLE . . .  C ADDR   0100H   A   
+MAIN . . . . . . .  C ADDR   0132H   A   
+MIDDLE_NIBBLE. . .  C ADDR   010DH   A   
+STAY . . . . . . .  C ADDR   015AH   A   
+UPPER_NIBBLE . . .  C ADDR   0121H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

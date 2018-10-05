@@ -1,0 +1,108 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    09/19/2018  12:23:58  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\blinky.obj TO .\Objects\embed_C PRINT (.\Listings\embed_C.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\blinky.obj (BLINKY)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\embed_C (BLINKY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0020H     UNIT         ?PR?_DELAYMS?BLINKY
+            CODE    0820H     0010H     UNIT         ?PR?MAIN?BLINKY
+            CODE    0830H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\embed_C (BLINKY)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?BLINKY
+
+?PR?MAIN?BLINKY
+  +--> ?PR?_DELAYMS?BLINKY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\embed_C (BLINKY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BLINKY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00A8H         PUBLIC        IEN0
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  09/19/2018  12:23:58  PAGE 2
+
+
+  D:00B8H         PUBLIC        IPL0
+  D:00D8H         PUBLIC        CCON
+  C:0820H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:0090H.7       PUBLIC        LED
+  D:00F8H         PUBLIC        UEPINT
+  D:00C8H         PUBLIC        T2CON
+  C:0800H         PUBLIC        _delayms
+  -------         PROC          MAIN
+  C:0820H         LINE#         39
+  C:0820H         LINE#         40
+  C:0820H         LINE#         41
+  C:0823H         LINE#         42
+  C:0825H         LINE#         43
+  C:0825H         LINE#         44
+  C:0825H         LINE#         45
+  C:0827H         LINE#         46
+  C:082EH         LINE#         47
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAYMS
+  D:0006H         SYMBOL        ms_sec
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0800H         LINE#         59
+  C:0800H         LINE#         60
+  C:0800H         LINE#         62
+  C:080AH         LINE#         63
+  C:080AH         LINE#         64
+  C:080DH         LINE#         66
+  C:080DH         LINE#         68
+  C:0818H         LINE#         69
+  C:081FH         LINE#         70
+  -------         ENDPROC       _DELAYMS
+  -------         ENDMOD        BLINKY
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0030H BYTE ( 2%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=63
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

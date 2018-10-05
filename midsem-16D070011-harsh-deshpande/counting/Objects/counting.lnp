@@ -1,0 +1,3 @@
+".\Objects\couting.obj" 
+TO ".\Objects\counting" 
+PRINT(".\Listings\counting.m51") RAMSIZE(256) 
