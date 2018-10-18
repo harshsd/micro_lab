@@ -1,0 +1,74 @@
+A51 MACRO ASSEMBLER  Q1                                                                   10/06/2018 13:52:33 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\q1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE q1.asm SET(SMALL) DEBUG PRINT(.\Listings\q1.lst) OBJECT(.\Objects\q1.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  00A0                 1     LCD_data equ P2    ;LCD Data port
+  0080                 2     LCD_rs   equ P0.0  ;LCD Register Select
+  0081                 3     LCD_rw   equ P0.1  ;LCD Read/Write
+  0082                 4     LCD_en   equ P0.2  ;LCD Enable
+  0097                 5     out equ p1.7    
+                       6             
+0000                   7     org 00h
+0000 020100            8     ljmp main
+                       9     
+000B                  10     org 0bh
+000B C28C             11             clr tr0
+000D C28D             12             clr tf0
+000F 85508C           13             mov th0 , 50h
+0012 85518A           14             mov tl0 , 51h
+0015 2401             15             add a,#1h
+0017 B48004           16             cjne a,#128,skip
+001A B297             17             cpl out
+001C 7400             18             mov a,#0
+001E D28C             19             skip:setb tr0
+0020 32               20             reti
+                      21     
+0100                  22     org 100h
+0100                  23     main:
+0100 7400             24     mov a,#0
+0102 7550C3           25     mov 50h , #0C3h
+0105 755150           26     mov 51h , #50h
+0108 759000           27     mov p1,#0
+010B 758901           28     mov tmod , #01h
+010E 75A882           29     mov ie , #82h
+0111 D28C             30     setb tr0
+0113 80FE             31     stay: sjmp stay
+                      32     
+                      33     end
+A51 MACRO ASSEMBLER  Q1                                                                   10/06/2018 13:52:33 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+IE . . . . . . . .  D ADDR   00A8H   A   
+LCD_DATA . . . . .  D ADDR   00A0H   A   
+LCD_EN . . . . . .  B ADDR   0080H.2 A   
+LCD_RS . . . . . .  B ADDR   0080H.0 A   
+LCD_RW . . . . . .  B ADDR   0080H.1 A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+OUT. . . . . . . .  B ADDR   0090H.7 A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+SKIP . . . . . . .  C ADDR   001EH   A   
+STAY . . . . . . .  C ADDR   0113H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

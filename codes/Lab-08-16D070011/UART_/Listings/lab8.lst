@@ -1,0 +1,119 @@
+C51 COMPILER V9.59.0.0   LAB8                                                              10/09/2018 16:53:12 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LAB8
+OBJECT MODULE PLACED IN .\Objects\lab8.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lab8.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\lab8
+                    -.lst) TABS(2) OBJECT(.\Objects\lab8.obj)
+
+line level    source
+
+   1          #include<at89c5131.h>
+   2          #include<stdio.h>
+   3          //#include<reg51.h>
+   4          #include<Keypad_Updated.c>
+   5          void t1config();
+   6          void init_serial();
+   7          //void msdelay(unsigned int time);
+   8          
+   9          unsigned char serial_data;
+  10          
+  11          sbit parity = PSW^0;
+  12          sbit LED = P1^7;
+  13          
+  14          void main()
+  15          { 
+  16   1        keypad_init();
+  17   1        port_init();
+  18   1        lcd_init();
+  19   1        //P1 = 0;
+  20   1        serial_data = 0x75;
+  21   1        init_serial();
+  22   1        while(1)
+  23   1        {
+  24   2          lcd_init();
+  25   2          msdelay(4);
+  26   2          lcd_cmd(0x80);
+  27   2          msdelay(4);
+  28   2          lcd_char(serial_data);
+  29   2          msdelay(100);
+  30   2        }
+  31   1      }
+  32          
+  33          void intr() interrupt 7
+  34          {
+  35   1          serial_data = read_keypad();  
+  36   1          lcd_init();
+  37   1          msdelay(4);
+  38   1          lcd_cmd(0x80);
+  39   1          msdelay(4);
+  40   1          lcd_write_string("Key is:");
+  41   1          msdelay(4);
+  42   1          lcd_char(serial_data);
+  43   1          msdelay(100);
+  44   1      }
+  45          
+  46          // //void msdelay(unsigned int time)
+  47          // {
+  48          //  int i,j;
+  49          //  for(i=0;i<time;i++)
+  50          //  {
+  51          //    for(j=0;j<382;j++);
+  52          //  }
+  53            
+  54          // }
+C51 COMPILER V9.59.0.0   LAB8                                                              10/09/2018 16:53:12 PAGE 2   
+
+  55          
+  56          void t1config()
+  57          {
+  58   1        TH1 = 204;//Value for 1200 baud rate
+  59   1        TL1 = 204;//Same as above
+  60   1        TMOD |= 0x20;
+  61   1        TR1 = 1;
+  62   1        //IE &= 0xF7;
+  63   1        //IE |= 0x90;//Start interupts by setting EA ES and ET1
+  64   1        EA =1;
+  65   1        ES = 1;
+  66   1        ET1 = 0;
+  67   1      }
+  68          
+  69          void init_serial()  
+  70          {
+  71   1        SCON |= 0xC0; //set bits SM0 and SM1 and clear the others.
+  72   1        SBUF = serial_data;
+  73   1        ACC = serial_data;
+  74   1        ACC+=0;
+  75   1        TB8 = ~parity;
+  76   1        t1config(); //Call t1 config here. This sets up serial communication
+  77   1        //REN = 1;  //Comment this if you are facing errors
+  78   1      }
+  79          
+  80          void serial_isr(void) interrupt 4
+  81          {
+  82   1        //msdelay(500);
+  83   1        if(TI == 1) //Check if previous transmission complete
+  84   1        {
+  85   2          SBUF = serial_data;
+  86   2          ACC = serial_data;
+  87   2          ACC += 0;
+  88   2          TB8 = ~parity;
+  89   2          //LED = ~LED;
+  90   2          TI = 0;
+  91   2        }
+  92   1      
+  93   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    646    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

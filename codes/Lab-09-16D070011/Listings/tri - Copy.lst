@@ -1,0 +1,153 @@
+C51 COMPILER V9.50a   TRI___COPY                                                           10/18/2018 10:12:49 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE TRI___COPY
+OBJECT MODULE PLACED IN .\Objects\tri - Copy.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ADSR\tri - Copy.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\tri - Copy.lst
+                    -) TABS(2) OBJECT(.\Objects\tri - Copy.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include <stdio.h>
+   3          
+   4          void delay(int delay_in_ms);
+   5          void SPI_init();
+   6          void SPI_send(char onebyte);
+   7          void SPI_send2(char hbyte, char lbyte);
+   8          void Timer_Init();
+   9          
+  10          unsigned char low,high,serial_data;
+  11          
+  12          sbit csb = P3^4;
+  13          sbit fs = P3^5;
+  14          
+  15          unsigned int list1[] = {2047, 2831, 3495, 3939, 4095, 3939, 3495, 2831, 2047, 1263, 599, 155, 0, 155, 599,
+             - 1263, 2047};
+  16          bit rising = 1;
+  17          bit transmit_completed = 0;
+  18          
+  19          unsigned int c,t=0;
+  20          
+  21          void main(void)
+  22          {
+  23   1        Timer_Init();
+  24   1        SPI_init();
+  25   1        while(1)
+  26   1        {
+  27   2          SPI_send2(high,low);
+  28   2          //delay(10);
+  29   2        }
+  30   1      }
+  31          
+  32          void delay(int delay_in_ms)
+  33          {
+  34   1        int d=0;
+  35   1        while(delay_in_ms>0)
+  36   1        {
+  37   2          for(d=0;d<382;d++);
+  38   2          delay_in_ms--;
+  39   2        }
+  40   1        return; 
+  41   1      }
+  42          
+  43          void SPI_init()
+  44          {
+  45   1        csb = 1;
+  46   1        fs = 1;                     // DISABLE ADC SLAVE SELECT-CS 
+  47   1        SPCON |= 0x20;                  // P1.1(SSBAR) is available as standard I/O pin 
+  48   1        SPCON |= 0x01;                  // Fclk Periph/4 AND Fclk Periph=12MHz ,HENCE SCK IE. BAUD RATE=3000KHz 
+  49   1        SPCON |= 0x10;                  // Master mode 
+  50   1        SPCON |= 0x08;                // CPOL=1; transmit mode example|| SCK is 0 at idle state
+  51   1        SPCON &= ~0x04;                 // CPHA=0; transmit mode example 
+  52   1        IEN1 |= 0x04;                   // enable spi interrupt 
+  53   1        EA=1;                           // enable interrupts 
+C51 COMPILER V9.50a   TRI___COPY                                                           10/18/2018 10:12:49 PAGE 2   
+
+  54   1        SPCON |= 0x40;                  // run spi;ENABLE SPI INTERFACE SPEN= 1 
+  55   1      //  IPH0 |=0x10;
+  56   1      //  IPL0 |=0x10;
+  57   1      }
+  58          
+  59          void SPI_send(char onebyte)   
+  60          {
+  61   1        transmit_completed = 0;
+  62   1        SPDAT = onebyte;
+  63   1        while(!transmit_completed);
+  64   1        return;
+  65   1      }
+  66          
+  67          void SPI_send2(char hbyte,char lbyte)
+  68          {
+  69   1        fs = 1;
+  70   1        csb = 0;
+  71   1        fs = 0;
+  72   1        SPI_send(hbyte);
+  73   1        SPI_send(lbyte);
+  74   1        fs = 1;
+  75   1        csb = 1;
+  76   1        return;
+  77   1      }
+  78          
+  79          void it_SPI(void) interrupt 9 /* interrupt address is 0x004B, (Address -3)/8 = interrupt no.*/
+  80          {
+  81   1        switch  ( SPSTA )         /* read and clear spi status register */
+  82   1        {
+  83   2          case 0x80:  
+  84   2            serial_data=SPDAT;   /* read receive data */    //needs to be read to clear the trigger
+  85   2            transmit_completed=1;/* set software flag */
+  86   2          break;
+  87   2      
+  88   2          case 0x10:
+  89   2            
+  90   2          break;
+  91   2        
+  92   2          case 0x40:
+  93   2          break;
+  94   2        }
+  95   1      }
+  96          
+  97          void Timer_Init()
+  98          {
+  99   1        // Set Timer0 to work in up counting 16 bit mode. Counts upto 
+ 100   1        // 65536 depending upon the calues of TH0 and TL0
+ 101   1        // The timer counts 65536 processor cycles. A processor cycle is 
+ 102   1        // 12 clocks. FOr 24 MHz, it takes 65536/2 uS to overflow
+ 103   1          
+ 104   1        TH0 = 0x48;//Initialize TH0
+ 105   1        TL0 = 0xe4;//Initialize TL0
+ 106   1        TMOD = 0x01;//Configure TMOD 
+ 107   1        ET0 = 1;//Set ET0
+ 108   1        TR0 = 1;//Set TR0
+ 109   1      }
+ 110          
+ 111          void Timer0_ISR(void) interrupt 1
+ 112          {
+ 113   1        TR0 = 0;
+ 114   1        TH0 = 0xFE;
+ 115   1        TL0 = 0x20;
+C51 COMPILER V9.50a   TRI___COPY                                                           10/18/2018 10:12:49 PAGE 3   
+
+ 116   1        if(t<15)
+ 117   1          { t=t+1;c=list1[t];}
+ 118   1        else
+ 119   1          {t=0;c=list1[t];}
+ 120   1        
+ 121   1        high = c/256;
+ 122   1        low = c%256;
+ 123   1        TR0 = 1;
+ 124   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    221    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     41    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

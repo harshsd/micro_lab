@@ -1,0 +1,166 @@
+C51 COMPILER V9.59.0.0   KEYPAD_UPDATED                                                    10/09/2018 15:43:43 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE KEYPAD_UPDATED
+OBJECT MODULE PLACED IN .\Objects\Keypad_Updated.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Keypad_Updated.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\Keypad_Updated.lst) TABS(2) OBJECT(.\Objects\Keypad_Updated.obj)
+
+line level    source
+
+   1          //#include "at89c5131.h"
+   2          #include "stdio.h"
+   3          #include "lcd_test.c"
+*** ERROR C202 IN LINE 2 OF lcd_test.c: 'P0': undefined identifier
+*** ERROR C202 IN LINE 3 OF lcd_test.c: 'P0': undefined identifier
+*** ERROR C202 IN LINE 4 OF lcd_test.c: 'P0': undefined identifier
+*** ERROR C202 IN LINE 21 OF lcd_test.c: 'RS': undefined identifier
+*** ERROR C202 IN LINE 22 OF lcd_test.c: 'RW': undefined identifier
+*** ERROR C202 IN LINE 23 OF lcd_test.c: 'EN': undefined identifier
+*** ERROR C202 IN LINE 24 OF lcd_test.c: 'P2': undefined identifier
+*** ERROR C202 IN LINE 26 OF lcd_test.c: 'EN': undefined identifier
+*** ERROR C202 IN LINE 30 OF lcd_test.c: 'RS': undefined identifier
+*** ERROR C202 IN LINE 31 OF lcd_test.c: 'RW': undefined identifier
+*** ERROR C202 IN LINE 32 OF lcd_test.c: 'EN': undefined identifier
+*** ERROR C202 IN LINE 33 OF lcd_test.c: 'P2': undefined identifier
+*** ERROR C202 IN LINE 35 OF lcd_test.c: 'EN': undefined identifier
+*** ERROR C202 IN LINE 59 OF lcd_test.c: 'P2': undefined identifier
+*** ERROR C202 IN LINE 60 OF lcd_test.c: 'EN': undefined identifier
+*** ERROR C202 IN LINE 61 OF lcd_test.c: 'RS': undefined identifier
+*** ERROR C202 IN LINE 62 OF lcd_test.c: 'RW': undefined identifier
+   4          #include "reg51.h"
+   5          
+   6          void keypad_init(void)
+   7          {
+   8   1            P1=0xF0;
+   9   1       //     P1|=0x0F;
+  10   1            KBE=0xF0;  //MOV 0x9D,#0xF0  ;KBE
+*** ERROR C202 IN LINE 10 OF Keypad_Updated.c: 'KBE': undefined identifier
+  11   1            KBLS=0x0F;   //MOV 0x9C,#0x0F  ;KBLS
+*** ERROR C202 IN LINE 11 OF Keypad_Updated.c: 'KBLS': undefined identifier
+  12   1            KBF=00; //0x9E,#00    ;KBF
+*** ERROR C202 IN LINE 12 OF Keypad_Updated.c: 'KBF': undefined identifier
+  13   1              while(KBF);
+*** ERROR C202 IN LINE 13 OF Keypad_Updated.c: 'KBF': undefined identifier
+  14   1            IEN1=0x01;   //MOV 0xB1,#0x01  ;IE1
+*** ERROR C202 IN LINE 14 OF Keypad_Updated.c: 'IEN1': undefined identifier
+  15   1            EA=1;
+  16   1      } 
+  17          void delay_in_ms(unsigned int time)
+  18          {
+  19   1        int i,j;
+  20   1        for(i=0;i<time;i++)
+  21   1        {
+  22   2          for(j=0;j<382;j++);
+  23   2        }
+  24   1      }
+  25          void read_keypad(void) interrupt 7
+  26          {
+  27   1      
+  28   1         unsigned char key=0,row=0,col=0,no=0,no_1=0,temp=0;
+  29   1         unsigned int i=0;
+  30   1         unsigned char final_val=0;
+  31   1        
+  32   1         P1= 0xF0;
+C51 COMPILER V9.59.0.0   KEYPAD_UPDATED                                                    10/09/2018 15:43:43 PAGE 2   
+
+  33   1        
+  34   1         temp=((~P1) & 0xF0)>>4; //row
+  35   1         i=0;
+  36   1         while(i<=3)
+  37   1         {
+  38   2            if(((temp>>i)&0x01)==1)
+  39   2            {
+  40   3              row=i;
+  41   3              break;
+  42   3            }
+  43   2            i++;      
+  44   2         }
+  45   1         P1=0x0F;
+  46   1         temp=((~P1) & 0x0F); //col 
+  47   1         i=0;
+  48   1         while(i<=3)
+  49   1         {
+  50   2            if(((temp>>i) & 0x01)==1)
+  51   2            {
+  52   3              col=i;      
+  53   3              break;
+  54   3            }
+  55   2            i++;      
+  56   2         }
+  57   1         //col=i;
+  58   1         no=(4*row)+col;
+  59   1         //delay_in_ms(15);
+  60   1         P1=0xF0;
+  61   1         temp=((~P1) & 0xF0)>>4; //row 
+  62   1         i=0;
+  63   1         while(i<=3)
+  64   1         {
+  65   2            if(((temp>>i) & 0x01)==1)
+  66   2            {
+  67   3              row=i;  
+  68   3              break;
+  69   3            }
+  70   2            i++;      
+  71   2         }
+  72   1         P1=0x0F;
+  73   1         temp=((~P1)&0x0F);
+  74   1         i=0;
+  75   1         while(i<=3)
+  76   1         {
+  77   2            if(((temp>>i) & 0x01)==1)
+  78   2            {
+  79   3              col=i;  
+  80   3              break;
+  81   3            }
+  82   2            i++;      
+  83   2         }   
+  84   1         //col=i;
+  85   1         no_1=4*row+col;
+  86   1         if(no==no_1)
+  87   1         {
+  88   2            final_val=no;
+  89   2         }
+  90   1         final_val += 48;
+  91   1         
+  92   1         if(final_val > 57 && final_val < 65)
+  93   1          final_val += 7;
+  94   1         
+C51 COMPILER V9.59.0.0   KEYPAD_UPDATED                                                    10/09/2018 15:43:43 PAGE 3   
+
+  95   1         P1=0xF0;
+  96   1         
+  97   1         while(P1!= 0xF0)
+  98   1             P1= 0xF0;
+  99   1         
+ 100   1          KBF=0x00;
+*** ERROR C202 IN LINE 100 OF Keypad_Updated.c: 'KBF': undefined identifier
+ 101   1          while(KBF); //Wait till flag gets cleared
+*** ERROR C202 IN LINE 101 OF Keypad_Updated.c: 'KBF': undefined identifier
+ 102   1           
+ 103   1        // return final_val;
+ 104   1          lcd_init();
+ 105   1          msdelay(4);
+ 106   1          lcd_cmd(0x80);
+ 107   1          msdelay(4);
+ 108   1          lcd_write_string("Key is:");
+ 109   1          msdelay(4);
+ 110   1          lcd_char(final_val);
+ 111   1          msdelay(500);
+ 112   1      } 
+ 113          
+ 114          void main()
+ 115          { 
+ 116   1        keypad_init();
+ 117   1        port_init();
+ 118   1        lcd_init();
+ 119   1        while(1)
+ 120   1        {
+ 121   2          lcd_init();
+ 122   2          msdelay(4);
+ 123   2          lcd_write_string("waiting");
+ 124   2          msdelay(100);
+ 125   2        }
+ 126   1      }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  24 ERROR(S)
