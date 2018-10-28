@@ -1,21 +1,20 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        10/18/2018  10:15:55  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/23/2018  15:35:18  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-C:\KEIL\C51\BIN\BL51.EXE .\Objects\my_notes.obj TO .\Objects\lab9 PRINT (.\Listings\lab9.m51) RAMSIZE (256)
+C:\KEIL\C51\BIN\BL51.EXE .\Objects\tri.obj TO .\Objects\lab9 PRINT (.\Listings\lab9.m51) RAMSIZE (256)
 
 
 MEMORY MODEL: SMALL
 
 
 INPUT MODULES INCLUDED:
-  .\Objects\my_notes.obj (MY_NOTES)
+  .\Objects\tri.obj (TRI)
   C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
-  C:\KEIL\C51\LIB\C51S.LIB (?C?IMUL)
   C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
 
 
-LINK MAP OF MODULE:  .\Objects\lab9 (MY_NOTES)
+LINK MAP OF MODULE:  .\Objects\lab9 (TRI)
 
 
             TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
@@ -23,11 +22,11 @@ LINK MAP OF MODULE:  .\Objects\lab9 (MY_NOTES)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-                    0008H     0018H                  *** GAP ***
-            BIT     0020H.0   0000H.3   UNIT         ?BI?MY_NOTES
+            DATA    0008H     0007H     UNIT         ?DT?TRI
+                    000FH     0011H                  *** GAP ***
+            BIT     0020H.0   0000H.3   UNIT         ?BI?TRI
                     0020H.3   0000H.5                *** GAP ***
-            DATA    0021H     002DH     UNIT         ?DT?MY_NOTES
-            IDATA   004EH     0001H     UNIT         ?STACK
+            IDATA   0021H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
@@ -38,264 +37,236 @@ LINK MAP OF MODULE:  .\Objects\lab9 (MY_NOTES)
                     001EH     002DH                  *** GAP ***
             CODE    004BH     0003H     ABSOLUTE     
                     004EH     07B2H                  *** GAP ***
-            CODE    0800H     00ABH     UNIT         ?PR?TIMER0_ISR?MY_NOTES
-            CODE    08ABH     008CH     UNIT         ?C_C51STARTUP
-            CODE    0937H     0047H     UNIT         ?PR?TIMER1_ISR?MY_NOTES
-            CODE    097EH     0035H     UNIT         ?C_INITSEG
-            CODE    09B3H     002CH     UNIT         ?PR?TIMER_INIT?MY_NOTES
-            CODE    09DFH     0021H     UNIT         ?PR?_DELAY?MY_NOTES
-            CODE    0A00H     001CH     UNIT         ?PR?SPI_INIT?MY_NOTES
-            CODE    0A1CH     001CH     UNIT         ?PR?IT_SPI?MY_NOTES
-            CODE    0A38H     0016H     UNIT         ?PR?MAIN?MY_NOTES
-            CODE    0A4EH     0015H     UNIT         ?PR?_SPI_SEND2?MY_NOTES
-            CODE    0A63H     0012H     UNIT         ?C?LIB_CODE
-            CODE    0A75H     0008H     UNIT         ?PR?_SPI_SEND?MY_NOTES
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     005CH     UNIT         ?PR?TIMER0_ISR?TRI
+            CODE    08E8H     0021H     UNIT         ?PR?_DELAY?TRI
+            CODE    0909H     001CH     UNIT         ?PR?SPI_INIT?TRI
+            CODE    0925H     001CH     UNIT         ?PR?IT_SPI?TRI
+            CODE    0941H     0016H     UNIT         ?PR?MAIN?TRI
+            CODE    0957H     0015H     UNIT         ?PR?_SPI_SEND2?TRI
+            CODE    096CH     0014H     UNIT         ?PR?TIMER_INIT?TRI
+            CODE    0980H     000FH     UNIT         ?C_INITSEG
+            CODE    098FH     000DH     UNIT         ?PR?TIMER1_ISR?TRI
+            CODE    099CH     0008H     UNIT         ?PR?_SPI_SEND?TRI
 
 
 
-OVERLAY MAP OF MODULE:   .\Objects\lab9 (MY_NOTES)
+OVERLAY MAP OF MODULE:   .\Objects\lab9 (TRI)
 
 
 SEGMENT
   +--> CALLED SEGMENT
 ---------------------
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/18/2018  10:15:55  PAGE 2
-
-
 ?C_C51STARTUP
-  +--> ?PR?MAIN?MY_NOTES
+  +--> ?PR?MAIN?TRI
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/23/2018  15:35:18  PAGE 2
+
+
   +--> ?C_INITSEG
 
-?PR?MAIN?MY_NOTES
-  +--> ?PR?TIMER_INIT?MY_NOTES
-  +--> ?PR?SPI_INIT?MY_NOTES
-  +--> ?PR?_SPI_SEND2?MY_NOTES
-  +--> ?PR?_DELAY?MY_NOTES
+?PR?MAIN?TRI
+  +--> ?PR?TIMER_INIT?TRI
+  +--> ?PR?SPI_INIT?TRI
+  +--> ?PR?_SPI_SEND2?TRI
+  +--> ?PR?_DELAY?TRI
 
-?PR?_SPI_SEND2?MY_NOTES
-  +--> ?PR?_SPI_SEND?MY_NOTES
+?PR?_SPI_SEND2?TRI
+  +--> ?PR?_SPI_SEND?TRI
 
 
 
-SYMBOL TABLE OF MODULE:  .\Objects\lab9 (MY_NOTES)
+SYMBOL TABLE OF MODULE:  .\Objects\lab9 (TRI)
 
   VALUE           TYPE          NAME
   ----------------------------------
 
-  -------         MODULE        MY_NOTES
+  -------         MODULE        TRI
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
-  D:0021H         PUBLIC        serial_data
+  D:0008H         PUBLIC        serial_data
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-  C:0800H         PUBLIC        Timer0_ISR
-  C:0A00H         PUBLIC        SPI_init
+  C:088CH         PUBLIC        Timer0_ISR
+  C:0909H         PUBLIC        SPI_init
   D:00C0H         PUBLIC        P4
-  C:0937H         PUBLIC        Timer1_ISR
+  C:098FH         PUBLIC        Timer1_ISR
   D:00C3H         PUBLIC        SPCON
   B:00A8H.7       PUBLIC        EA
   D:00C4H         PUBLIC        SPSTA
   D:00A8H         PUBLIC        IEN0
   D:00B1H         PUBLIC        IEN1
   B:0020H.0       PUBLIC        rising
-  C:09DFH         PUBLIC        _delay
+  C:08E8H         PUBLIC        _delay
   D:00B8H         PUBLIC        IPL0
   B:0020H.1       PUBLIC        transmit_completed
-  D:0022H         PUBLIC        high
+  D:0009H         PUBLIC        high
   D:00D8H         PUBLIC        CCON
-  C:0A38H         PUBLIC        main
-  D:0023H         PUBLIC        timer_high
-  C:0A1CH         PUBLIC        it_SPI
-  C:0A4EH         PUBLIC        _SPI_send2
-  D:0024H         PUBLIC        c_m
+  C:0941H         PUBLIC        main
+  C:0925H         PUBLIC        it_SPI
+  C:0957H         PUBLIC        _SPI_send2
   D:0098H         PUBLIC        SCON
   D:0089H         PUBLIC        TMOD
   D:0088H         PUBLIC        TCON
   B:00B0H.4       PUBLIC        csb
-  D:0026H         PUBLIC        test
   B:00A8H.1       PUBLIC        ET0
-  B:00A8H.3       PUBLIC        ET1
   D:008CH         PUBLIC        TH0
   D:008DH         PUBLIC        TH1
   D:008AH         PUBLIC        TL0
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/18/2018  10:15:55  PAGE 3
-
-
   D:008BH         PUBLIC        TL1
-  D:0046H         PUBLIC        low
+  D:000AH         PUBLIC        low
   B:0088H.4       PUBLIC        TR0
-  D:0047H         PUBLIC        curr_note
   D:00F8H         PUBLIC        UEPINT
   B:0088H.6       PUBLIC        TR1
-  D:0049H         PUBLIC        timer_low
   B:00B0H.5       PUBLIC        fs
-  D:004AH         PUBLIC        c
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/23/2018  15:35:18  PAGE 3
+
+
+  D:000BH         PUBLIC        c
   D:00C8H         PUBLIC        T2CON
   B:0020H.2       PUBLIC        k
-  D:004CH         PUBLIC        t
-  C:0A75H         PUBLIC        _SPI_send
-  C:09B3H         PUBLIC        Timer_Init
+  D:000DH         PUBLIC        t
+  C:099CH         PUBLIC        _SPI_send
+  C:096CH         PUBLIC        Timer_Init
   D:00C5H         PUBLIC        SPDAT
   -------         PROC          MAIN
-  C:0A38H         LINE#         33
-  C:0A38H         LINE#         34
-  C:0A38H         LINE#         35
-  C:0A3BH         LINE#         36
-  C:0A3EH         LINE#         37
-  C:0A3EH         LINE#         38
-  C:0A3EH         LINE#         39
-  C:0A45H         LINE#         40
-  C:0A4CH         LINE#         41
+  C:0941H         LINE#         23
+  C:0941H         LINE#         24
+  C:0941H         LINE#         25
+  C:0944H         LINE#         26
+  C:0947H         LINE#         27
+  C:0947H         LINE#         28
+  C:0947H         LINE#         29
+  C:094EH         LINE#         30
+  C:0955H         LINE#         31
   -------         ENDPROC       MAIN
   -------         PROC          _DELAY
   D:0006H         SYMBOL        delay_in_ms
   -------         DO            
   D:0004H         SYMBOL        d
   -------         ENDDO         
-  C:09DFH         LINE#         44
-  C:09DFH         LINE#         45
-  C:09DFH         LINE#         46
-  C:09DFH         LINE#         47
-  C:09EAH         LINE#         48
-  C:09EAH         LINE#         49
-  C:09F8H         LINE#         50
-  C:09FDH         LINE#         51
-  C:09FFH         LINE#         53
+  C:08E8H         LINE#         34
+  C:08E8H         LINE#         35
+  C:08E8H         LINE#         36
+  C:08E8H         LINE#         37
+  C:08F3H         LINE#         38
+  C:08F3H         LINE#         39
+  C:0901H         LINE#         40
+  C:0906H         LINE#         41
+  C:0908H         LINE#         43
   -------         ENDPROC       _DELAY
   -------         PROC          SPI_INIT
-  C:0A00H         LINE#         55
-  C:0A00H         LINE#         56
-  C:0A00H         LINE#         57
-  C:0A02H         LINE#         58
-  C:0A04H         LINE#         59
-  C:0A07H         LINE#         60
-  C:0A0AH         LINE#         61
-  C:0A0DH         LINE#         62
-  C:0A10H         LINE#         63
-  C:0A13H         LINE#         64
-  C:0A16H         LINE#         65
-  C:0A18H         LINE#         66
-  C:0A1BH         LINE#         69
+  C:0909H         LINE#         45
+  C:0909H         LINE#         46
+  C:0909H         LINE#         47
+  C:090BH         LINE#         48
+  C:090DH         LINE#         49
+  C:0910H         LINE#         50
+  C:0913H         LINE#         51
+  C:0916H         LINE#         52
+  C:0919H         LINE#         53
+  C:091CH         LINE#         54
+  C:091FH         LINE#         55
+  C:0921H         LINE#         56
+  C:0924H         LINE#         59
   -------         ENDPROC       SPI_INIT
   -------         PROC          _SPI_SEND
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/18/2018  10:15:55  PAGE 4
-
-
   D:0007H         SYMBOL        onebyte
-  C:0A75H         LINE#         71
-  C:0A75H         LINE#         72
-  C:0A75H         LINE#         73
-  C:0A77H         LINE#         74
-  C:0A79H         LINE#         75
-  C:0A7CH         LINE#         77
+  C:099CH         LINE#         61
+  C:099CH         LINE#         62
+  C:099CH         LINE#         63
+  C:099EH         LINE#         64
+  C:09A0H         LINE#         65
+  C:09A3H         LINE#         67
   -------         ENDPROC       _SPI_SEND
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/23/2018  15:35:18  PAGE 4
+
+
   -------         PROC          _SPI_SEND2
   D:0007H         SYMBOL        hbyte
   D:0006H         SYMBOL        lbyte
-  C:0A4EH         LINE#         79
-  C:0A50H         LINE#         80
-  C:0A50H         LINE#         81
-  C:0A52H         LINE#         82
-  C:0A54H         LINE#         83
-  C:0A56H         LINE#         84
-  C:0A59H         LINE#         85
-  C:0A5EH         LINE#         86
-  C:0A60H         LINE#         87
-  C:0A62H         LINE#         89
+  C:0957H         LINE#         69
+  C:0959H         LINE#         70
+  C:0959H         LINE#         71
+  C:095BH         LINE#         72
+  C:095DH         LINE#         73
+  C:095FH         LINE#         74
+  C:0962H         LINE#         75
+  C:0967H         LINE#         76
+  C:0969H         LINE#         77
+  C:096BH         LINE#         79
   -------         ENDPROC       _SPI_SEND2
   -------         PROC          IT_SPI
-  C:0A1CH         LINE#         91
-  C:0A25H         LINE#         93
-  C:0A2CH         LINE#         94
-  C:0A2CH         LINE#         95
-  C:0A2CH         LINE#         96
-  C:0A2FH         LINE#         97
-  C:0A31H         LINE#         98
-  C:0A31H         LINE#         100
-  C:0A31H         LINE#         102
-  C:0A31H         LINE#         104
-  C:0A31H         LINE#         105
-  C:0A31H         LINE#         106
-  C:0A31H         LINE#         107
+  C:0925H         LINE#         81
+  C:092EH         LINE#         83
+  C:0935H         LINE#         84
+  C:0935H         LINE#         85
+  C:0935H         LINE#         86
+  C:0938H         LINE#         87
+  C:093AH         LINE#         88
+  C:093AH         LINE#         90
+  C:093AH         LINE#         92
+  C:093AH         LINE#         94
+  C:093AH         LINE#         95
+  C:093AH         LINE#         96
+  C:093AH         LINE#         97
   -------         ENDPROC       IT_SPI
   -------         PROC          TIMER_INIT
-  C:09B3H         LINE#         109
-  C:09B3H         LINE#         110
-  C:09B3H         LINE#         115
-  C:09B8H         LINE#         116
-  C:09C1H         LINE#         117
-  C:09C8H         LINE#         118
-  C:09CAH         LINE#         119
-  C:09CDH         LINE#         120
-  C:09D0H         LINE#         121
-  C:09D3H         LINE#         122
-  C:09D6H         LINE#         123
-  C:09D8H         LINE#         124
-  C:09DAH         LINE#         125
-  C:09DCH         LINE#         126
-  C:09DEH         LINE#         127
+  C:096CH         LINE#         99
+  C:096CH         LINE#         100
+  C:096CH         LINE#         106
+  C:096FH         LINE#         107
+  C:0972H         LINE#         108
+  C:0975H         LINE#         109
+  C:0978H         LINE#         110
+  C:097BH         LINE#         111
+  C:097DH         LINE#         112
+  C:097FH         LINE#         115
   -------         ENDPROC       TIMER_INIT
   -------         PROC          TIMER1_ISR
-  C:0937H         LINE#         130
-  C:094AH         LINE#         132
-BL51 BANKED LINKER/LOCATER V6.22                                                      10/18/2018  10:15:55  PAGE 5
-
-
-  C:094CH         LINE#         133
-  C:094FH         LINE#         134
-  C:0952H         LINE#         135
-  C:0954H         LINE#         136
-  C:0965H         LINE#         137
-  C:0969H         LINE#         138
-  C:096BH         LINE#         139
-  C:096DH         LINE#         140
+  C:098FH         LINE#         118
+  C:098FH         LINE#         120
+  C:0991H         LINE#         121
+  C:0994H         LINE#         122
+  C:0997H         LINE#         123
+  C:0999H         LINE#         124
+  C:099BH         LINE#         125
   -------         ENDPROC       TIMER1_ISR
   -------         PROC          TIMER0_ISR
-  C:0800H         LINE#         142
-  C:080BH         LINE#         144
-  C:080DH         LINE#         145
-  C:0810H         LINE#         146
-  C:0813H         LINE#         147
-  C:0816H         LINE#         148
-  C:0816H         LINE#         149
-  C:0821H         LINE#         150
-  C:0829H         LINE#         151
-  C:0832H         LINE#         152
-  C:083DH         LINE#         153
-  C:083DH         LINE#         154
-  C:0845H         LINE#         155
-  C:0847H         LINE#         157
-  C:084FH         LINE#         158
-  C:0851H         LINE#         160
-  C:0851H         LINE#         161
-  C:085CH         LINE#         162
-  C:085CH         LINE#         163
-  C:0864H         LINE#         164
-  C:0870H         LINE#         165
-  C:0872H         LINE#         167
-  C:0872H         LINE#         168
-  C:087DH         LINE#         169
-  C:0888H         LINE#         170
-  C:0888H         LINE#         171
-  C:088EH         LINE#         172
-  C:088EH         LINE#         173
-  C:0897H         LINE#         174
-  C:089EH         LINE#         175
-  C:08A0H         LINE#         176
-  C:08A0H         LINE#         177
-  C:08A0H         LINE#         178
-  C:08A2H         LINE#         179
+  C:088CH         LINE#         127
+  C:0890H         LINE#         129
+  C:0892H         LINE#         130
+  C:0895H         LINE#         131
+  C:0898H         LINE#         132
+  C:089BH         LINE#         133
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/23/2018  15:35:18  PAGE 5
+
+
+  C:089BH         LINE#         134
+  C:08A2H         LINE#         135
+  C:08AAH         LINE#         136
+  C:08B3H         LINE#         138
+  C:08B5H         LINE#         139
+  C:08B7H         LINE#         141
+  C:08B7H         LINE#         142
+  C:08C2H         LINE#         143
+  C:08C2H         LINE#         144
+  C:08CAH         LINE#         145
+  C:08D6H         LINE#         146
+  C:08D8H         LINE#         148
+  C:08D8H         LINE#         149
+  C:08DAH         LINE#         150
+  C:08DAH         LINE#         151
+  C:08DAH         LINE#         152
+  C:08DEH         LINE#         153
+  C:08E1H         LINE#         154
+  C:08E3H         LINE#         155
   -------         ENDPROC       TIMER0_ISR
-  -------         ENDMOD        MY_NOTES
-
-  -------         MODULE        ?C?IMUL
-  C:0A63H         PUBLIC        ?C?IMUL
-  -------         ENDMOD        ?C?IMUL
+  -------         ENDMOD        TRI
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01E7H BYTE (23%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0120H BYTE (14%) *
 ******************************************************************************
 
-Program Size: data=54.3 xdata=0 code=649
+Program Size: data=16.3 xdata=0 code=432
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

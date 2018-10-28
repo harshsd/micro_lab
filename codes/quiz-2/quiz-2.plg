@@ -1,0 +1,89 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\IIT\Semester 5\Micro_lab\codes\quiz-2\quiz-2.uvproj
+Project File Date:  10/23/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+Target has no object modules
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+quiz2.c(1): warning C318: can't open file 'at89c5131a.h'
+lcd_test.c(2): error C202: 'P0': undefined identifier
+lcd_test.c(3): error C202: 'P0': undefined identifier
+lcd_test.c(4): error C202: 'P0': undefined identifier
+lcd_test.c(21): error C202: 'RS': undefined identifier
+lcd_test.c(22): error C202: 'RW': undefined identifier
+lcd_test.c(23): error C202: 'EN': undefined identifier
+lcd_test.c(24): error C202: 'P2': undefined identifier
+lcd_test.c(26): error C202: 'EN': undefined identifier
+lcd_test.c(30): error C202: 'RS': undefined identifier
+lcd_test.c(31): error C202: 'RW': undefined identifier
+lcd_test.c(32): error C202: 'EN': undefined identifier
+lcd_test.c(33): error C202: 'P2': undefined identifier
+lcd_test.c(35): error C202: 'EN': undefined identifier
+lcd_test.c(59): error C202: 'P2': undefined identifier
+lcd_test.c(60): error C202: 'EN': undefined identifier
+lcd_test.c(61): error C202: 'RS': undefined identifier
+lcd_test.c(62): error C202: 'RW': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+compiling quiz2.c...
+quiz2.c(13): warning C206: 'setup': missing function-prototype
+quiz2.c(18): warning C206: 'lcd_command': missing function-prototype
+quiz2.c(18): error C267: 'lcd_command': requires ANSI-style prototype
+quiz2.c(31): error C231: 'setup': redefinition
+quiz2.c(32): error C202: 'ie': undefined identifier
+quiz2.c(33): error C202: 'tmod': undefined identifier
+quiz2.c(36): error C231: 'setup': redefinition
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+quiz2.c(13): warning C206: 'setup': missing function-prototype
+quiz2.c(18): warning C206: 'lcd_command': missing function-prototype
+quiz2.c(18): error C267: 'lcd_command': requires ANSI-style prototype
+quiz2.c(31): error C231: 'setup': redefinition
+quiz2.c(33): error C202: 'ea': undefined identifier
+quiz2.c(36): error C202: 'tmod': undefined identifier
+quiz2.c(39): error C231: 'setup': redefinition
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+quiz2.c(20): warning C206: 'lcd_command': missing function-prototype
+quiz2.c(20): error C267: 'lcd_command': requires ANSI-style prototype
+quiz2.c(35): error C202: 'ea': undefined identifier
+quiz2.c(38): error C202: 'tmod': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+quiz2.c(20): warning C206: 'lcd_command': missing function-prototype
+quiz2.c(20): error C267: 'lcd_command': requires ANSI-style prototype
+quiz2.c(38): error C202: 'tmod': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+quiz2.c(20): warning C206: 'lcd_command': missing function-prototype
+quiz2.c(20): error C267: 'lcd_command': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+compiling quiz2.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_WRITE_STRING?QUIZ2
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?PORT_INIT?QUIZ2
+Program Size: data=20.0 xdata=0 code=476
+"quiz-2" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling quiz2.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_WRITE_STRING?QUIZ2
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?PORT_INIT?QUIZ2
+Program Size: data=20.0 xdata=0 code=476
+"quiz-2" - 0 Error(s), 2 Warning(s).

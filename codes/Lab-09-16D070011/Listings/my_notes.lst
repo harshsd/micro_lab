@@ -1,4 +1,4 @@
-C51 COMPILER V9.50a   MY_NOTES                                                             10/18/2018 10:15:54 PAGE 1   
+C51 COMPILER V9.50a   MY_NOTES                                                             10/23/2018 15:30:51 PAGE 1   
 
 
 C51 COMPILER V9.50a, COMPILATION OF MODULE MY_NOTES
@@ -47,7 +47,7 @@ line level    source
   37   1        while(1)
   38   1        {
   39   2          SPI_send2(high,low);
-  40   2          delay(10);
+  40   2          //delay(10);
   41   2        }
   42   1      }
   43          
@@ -62,7 +62,7 @@ line level    source
   52   1        return; 
   53   1      }
   54          
-C51 COMPILER V9.50a   MY_NOTES                                                             10/18/2018 10:15:54 PAGE 2   
+C51 COMPILER V9.50a   MY_NOTES                                                             10/23/2018 15:30:51 PAGE 2   
 
   55          void SPI_init()
   56          {
@@ -126,7 +126,7 @@ line level    source
  114   1        // 12 clocks. FOr 24 MHz, it takes 65536/2 uS to overflow
  115   1        curr_note = 0;
  116   1        timer_low = test[curr_note];
-C51 COMPILER V9.50a   MY_NOTES                                                             10/18/2018 10:15:54 PAGE 3   
+C51 COMPILER V9.50a   MY_NOTES                                                             10/23/2018 15:30:51 PAGE 3   
 
  117   1        timer_high = test[curr_note+1];
  118   1        TH0 = timer_high;//Initialize TH0
@@ -190,13 +190,13 @@ line level    source
  176   3          }
  177   2        }
  178   1        TR0 = 1;
-C51 COMPILER V9.50a   MY_NOTES                                                             10/18/2018 10:15:54 PAGE 4   
+C51 COMPILER V9.50a   MY_NOTES                                                             10/23/2018 15:30:51 PAGE 4   
 
  179   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    426    ----
+   CODE SIZE        =    419    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

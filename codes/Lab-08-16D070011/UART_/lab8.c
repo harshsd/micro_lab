@@ -17,16 +17,16 @@ void main()
 	port_init();
 	lcd_init();
 	//P1 = 0;
-	serial_data = 0x75;
+	serial_data = 0x41;
 	init_serial();
 	while(1)
 	{
-		lcd_init();
-		msdelay(4);
-		lcd_cmd(0x80);
-		msdelay(4);
-		lcd_char(serial_data);
-		msdelay(100);
+		//lcd_init();
+		//msdelay(4);
+		//lcd_cmd(0x80);
+		//msdelay(4);
+		//lcd_char(serial_data);
+		//msdelay(100);
 	}
 }
 

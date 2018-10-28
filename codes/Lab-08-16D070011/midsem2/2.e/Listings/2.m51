@@ -1,0 +1,157 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        10/06/2018  15:14:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\2.obj TO .\Objects\2 PRINT (.\Listings\2.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\2.obj (2)
+
+
+LINK MAP OF MODULE:  .\Objects\2 (2)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0890H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\2 (2)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        2
+  C:0108H         SYMBOL        BACK
+  C:0106H         SYMBOL        BACK1
+  C:0517H         SYMBOL        BACK_Z
+  C:01C7H         SYMBOL        BTOA
+  C:0129H         SYMBOL        CLEAR_LCD
+  C:01E2H         SYMBOL        CONTINUE
+  C:01F5H         SYMBOL        CONTINUE1
+  C:01B6H         SYMBOL        DELAY
+  C:011DH         SYMBOL        DELAY1
+  C:0111H         SYMBOL        DELAY5
+  C:0100H         SYMBOL        DELAY50
+  C:01A3H         SYMBOL        EXIT
+  C:0515H         SYMBOL        HERE
+  D:00A8H         SYMBOL        IE
+  C:0859H         SYMBOL        ISR_EX0
+  C:084DH         SYMBOL        ISR_T0
+  C:01DAH         SYMBOL        L
+  C:01EDH         SYMBOL        L1
+  C:0178H         SYMBOL        LCD_COMMAND
+  D:00A0H         SYMBOL        LCD_DATA
+  B:0080H.2       SYMBOL        LCD_EN
+  C:013BH         SYMBOL        LCD_INIT
+  B:0080H.0       SYMBOL        LCD_RS
+  B:0080H.1       SYMBOL        LCD_RW
+  C:0187H         SYMBOL        LCD_SENDDATA
+  C:0198H         SYMBOL        LCD_SENDSTRING
+  C:01A6H         SYMBOL        LCD_SENDSTRING_BYTE
+  C:01FAH         SYMBOL        LETTER
+  C:020AH         SYMBOL        LETTER1
+  C:0115H         SYMBOL        LOOP4
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/06/2018  15:14:33  PAGE 2
+
+
+  C:0121H         SYMBOL        LOOP5
+  C:01BCH         SYMBOL        LOOP7
+  C:01BEH         SYMBOL        LOOP8
+  C:0500H         SYMBOL        MAIN
+  C:087AH         SYMBOL        MY_STRING1
+  C:0886H         SYMBOL        MY_STRING2
+  C:01DFH         SYMBOL        N
+  C:01F2H         SYMBOL        N1
+  C:0211H         SYMBOL        NUMBER1
+  C:0202H         SYMBOL        NUMBER2
+  D:0080H         SYMBOL        P0
+  D:00A0H         SYMBOL        P2
+  C:019AH         SYMBOL        PRINT_LOOP
+  C:086FH         SYMBOL        RETURN
+  C:0800H         SYMBOL        SHOW_PULSE
+  D:0088H         SYMBOL        TCON
+  D:008CH         SYMBOL        TH0
+  D:008AH         SYMBOL        TL0
+  D:0089H         SYMBOL        TMOD
+  B:0088H.4       SYMBOL        TR0
+  C:0000H         LINE#         8
+  C:0003H         LINE#         11
+  C:000BH         LINE#         14
+  C:0500H         LINE#         25
+  C:0503H         LINE#         26
+  C:0506H         LINE#         28
+  C:0509H         LINE#         29
+  C:050BH         LINE#         30
+  C:050DH         LINE#         31
+  C:050FH         LINE#         32
+  C:0512H         LINE#         33
+  C:0515H         LINE#         35
+  C:0517H         LINE#         38
+  C:0800H         LINE#         47
+  C:0803H         LINE#         48
+  C:0806H         LINE#         49
+  C:0809H         LINE#         50
+  C:080CH         LINE#         51
+  C:080FH         LINE#         52
+  C:0812H         LINE#         53
+  C:0814H         LINE#         54
+  C:0817H         LINE#         55
+  C:081AH         LINE#         56
+  C:081DH         LINE#         57
+  C:0820H         LINE#         58
+  C:0823H         LINE#         59
+  C:0826H         LINE#         60
+  C:0828H         LINE#         61
+  C:082BH         LINE#         62
+  C:082EH         LINE#         63
+  C:0831H         LINE#         64
+  C:0834H         LINE#         65
+  C:0837H         LINE#         66
+  C:083AH         LINE#         67
+  C:083DH         LINE#         68
+  C:0840H         LINE#         69
+  C:0843H         LINE#         70
+BL51 BANKED LINKER/LOCATER V6.22                                                      10/06/2018  15:14:33  PAGE 3
+
+
+  C:0846H         LINE#         71
+  C:0849H         LINE#         72
+  C:084CH         LINE#         73
+  C:084DH         LINE#         77
+  C:084FH         LINE#         78
+  C:0850H         LINE#         79
+  C:0853H         LINE#         80
+  C:0856H         LINE#         81
+  C:0858H         LINE#         82
+  C:0859H         LINE#         86
+  C:085BH         LINE#         87
+  C:085DH         LINE#         88
+  C:085FH         LINE#         89
+  C:0860H         LINE#         90
+  C:0863H         LINE#         91
+  C:0865H         LINE#         92
+  C:0867H         LINE#         93
+  C:0869H         LINE#         94
+  C:086BH         LINE#         95
+  C:086EH         LINE#         96
+  C:086FH         LINE#         98
+  C:0872H         LINE#         99
+  C:0875H         LINE#         100
+  C:0877H         LINE#         101
+  C:0879H         LINE#         103
+  -------         ENDMOD        2
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01CAH BYTE (22%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=2192
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

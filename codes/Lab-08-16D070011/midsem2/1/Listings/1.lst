@@ -1,0 +1,104 @@
+A51 MACRO ASSEMBLER  1                                                                    10/06/2018 13:52:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02c
+OBJECT MODULE PLACED IN .\Objects\1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 1.asm SET(SMALL) DEBUG PRINT(.\Listings\1.lst) OBJECT(.\Objects\1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 020043            2     LJMP MAIN               
+                       3     
+000B                   4     ORG 000BH                  
+000B 020200            5     LJMP ISR_T0                ;jump to ISR
+                       6     
+                       7     
+                       8     
+                       9     ;--The main program for initialization
+                      10     
+                      11         
+0030                  12     ORG 0030H                 ; after vector tablespace
+                      13     
+                      14     ;load TL0 and TH0 with value stored in 82H and 81H
+0030                  15     Load_timer0:
+0030 C000             16             PUSH 0
+0032 7881             17             MOV R0,#81H
+0034 C3               18             CLR C
+0035 7400             19             MOV A,#00H
+0037 96               20             SUBB A,@R0
+0038 F58A             21             MOV TL0,A
+003A 08               22             INC R0
+003B 7400             23             MOV A,#00H
+003D 96               24             SUBB A,@R0
+003E F58C             25             MOV TH0,A
+0040 D000             26             POP 0
+0042 22               27             RET
+                      28                     
+                      29     
+0043                  30     MAIN:
+                      31             ;for 1/60 second
+0043 7881             32         MOV R0,#81H
+0045 7635             33             MOV @R0,#35H
+0047 08               34             INC R0
+0048 7682             35             MOV @R0,#82H
+004A 75A882           36             MOV IE,#82H
+004D 120030           37             LCALL Load_Timer0
+0050 758901           38             MOV TMOD,#01H ;mode 1 
+0053 7A00             39             MOV R2,#0 ;for counting number of clock cycles
+0055 759000           40             MOV P1,#00H
+0058 D28C             41             SETB TR0
+005A 80FE             42             HERE: SJMP HERE
+                      43     
+                      44     
+005C 80FE             45     BACK: SJMP BACK          
+                      46     
+                      47     
+                      48     
+                      49     
+                      50     ; Timer 0 ISR. Must be reloaded, not auto-reload
+                      51     
+0200                  52     ORG 200H
+0200                  53     ISR_T0:
+0200 C28C             54             CLR TR0
+0202 0A               55         INC R2
+0203 BA3C05           56             CJNE R2,#60,return
+0206 7A00             57             MOV R2,#0
+0208 6390FF           58             XRL P1,#0FFH 
+A51 MACRO ASSEMBLER  1                                                                    10/06/2018 13:52:38 PAGE     2
+
+                      59             
+020B                  60             return:
+020B 120030           61             LCALL Load_timer0
+020E D28C             62             SETB TR0
+0210 32               63     RETI; return to main
+                      64     
+                      65     END
+                                 
+                                 
+A51 MACRO ASSEMBLER  1                                                                    10/06/2018 13:52:38 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   005CH   A   
+HERE . . . . . . .  C ADDR   005AH   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+ISR_T0 . . . . . .  C ADDR   0200H   A   
+LOAD_TIMER0. . . .  C ADDR   0030H   A   
+MAIN . . . . . . .  C ADDR   0043H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+RETURN . . . . . .  C ADDR   020BH   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

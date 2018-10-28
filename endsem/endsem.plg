@@ -1,0 +1,15 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\IIT\Semester 5\Micro_lab\endsem\endsem.uvproj
+Project File Date:  10/27/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling endsem2.c...
+linking...
+Program Size: data=69.1 xdata=0 code=3262
+creating hex file from "endsem"...
+"endsem" - 0 Error(s), 0 Warning(s).

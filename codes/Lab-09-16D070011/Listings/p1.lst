@@ -1,10 +1,10 @@
-C51 COMPILER V9.59.0.0   P1                                                                10/16/2018 16:20:20 PAGE 1   
+C51 COMPILER V9.50a   P1                                                                   10/23/2018 15:29:30 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE P1
+C51 COMPILER V9.50a, COMPILATION OF MODULE P1
 OBJECT MODULE PLACED IN .\Objects\p1.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ADSR\p1.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\p
-                    -1.lst) TABS(2) OBJECT(.\Objects\p1.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ADSR\p1.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\p1.lst) TABS(2) OBJECT
+                    -(.\Objects\p1.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52   1        IEN1 |= 0x04;                   // enable spi interrupt 
   53   1        EA=1;                           // enable interrupts 
   54   1        SPCON |= 0x40;                  // run spi;ENABLE SPI INTERFACE SPEN= 1 
-C51 COMPILER V9.59.0.0   P1                                                                10/16/2018 16:20:20 PAGE 2   
+C51 COMPILER V9.50a   P1                                                                   10/23/2018 15:29:30 PAGE 2   
 
   55   1      //  IPH0 |=0x10;
   56   1      //  IPL0 |=0x10;

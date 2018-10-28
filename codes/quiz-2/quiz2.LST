@@ -1,0 +1,87 @@
+C51 COMPILER V9.50a   QUIZ2                                                                10/23/2018 13:35:22 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE QUIZ2
+OBJECT MODULE PLACED IN quiz2.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE quiz2.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include <stdio.h>
+   3          #include <lcd_test.c>
+   4          
+   5          void setup();
+   6          
+   7          unsigned int overflow = 0;
+   8          unsigned int lower_bit = 0;
+   9          unsigned int upper_bit = 0;
+  10          unsigned int t=0;
+  11          
+  12          
+  13          void main()
+  14          {
+  15   1        setup();
+  16   1      
+  17   1        while(1)
+  18   1        {
+  19   2          lcd_init();
+  20   2          lcd_cmd(0x80);
+  21   2          lcd_char(overflow);
+  22   2          lcd_cmd(0x85);
+  23   2          lcd_char(upper_bit);
+  24   2          lcd_cmd(0x88);
+  25   2          lcd_char(lower_bit);
+  26   2          msdelay(1);
+  27   2      
+  28   2        }
+  29   1      
+  30   1      }
+  31          
+  32          void setup()
+  33          {
+  34   1        //ie = 0x83;
+  35   1        EA = 1;
+  36   1        IT0 = 1;
+  37   1        ET0 = 1;
+  38   1        TMOD = 0x09;
+  39   1        IT0 = 1;
+  40   1        TR0 = 1;
+  41   1      }
+  42          
+  43          void timer_isr(void) interrupt 1
+  44          {
+  45   1        TR0 = 0;
+  46   1        t +=1;
+  47   1        TH0 = 0;
+  48   1        TL0 = 0;
+  49   1        TR0 = 1;
+  50   1      }
+  51          
+  52          void interrupt_isr(void) interrupt 0
+  53          {
+  54   1        TR0 = 0;
+  55   1        lower_bit = TL0;
+C51 COMPILER V9.50a   QUIZ2                                                                10/23/2018 13:35:22 PAGE 2   
+
+  56   1        upper_bit = TH0;
+  57   1        overflow = t;
+  58   1        TL0 = 0;
+  59   1        TH0 = 0;
+  60   1        t = 0;
+  61   1        TR0 = 1;
+  62   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    285    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

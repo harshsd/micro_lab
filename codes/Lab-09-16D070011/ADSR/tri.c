@@ -133,7 +133,7 @@ void Timer0_ISR(void) interrupt 1
 	{
 		if(t<256)
 			{t = t+1;
-			c=c+15;}
+			c=c+10;}
 		else
 			{rising=0;}
 	}
@@ -142,7 +142,7 @@ void Timer0_ISR(void) interrupt 1
 		if(t>0)
 		{
 		t=t-1;
-			c = c-15;
+			c = c-10;
 		}
 		else
 		{

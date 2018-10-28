@@ -37,7 +37,7 @@ void main(void)
 	while(1)
 	{
 		SPI_send2(high,low);
-		delay(10);
+		//delay(10);
 	}
 }
 

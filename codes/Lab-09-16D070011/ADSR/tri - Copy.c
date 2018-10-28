@@ -118,7 +118,7 @@ void Timer0_ISR(void) interrupt 1
 	else
 		{t=0;c=list1[t];}
 	
-	high = c/256;
-	low = c%256;
+	high = (c/256)/2;
+	low = (c%256)/2;
 	TR0 = 1;
 }

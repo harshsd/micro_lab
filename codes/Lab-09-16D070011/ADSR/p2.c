@@ -1,6 +1,6 @@
 #include <at89c5131.h>
 #include <stdio.h>
-#include <math.h>
+//#include <math.h>
 
 void SPI_init();
 void SPI_send(char onebyte);
